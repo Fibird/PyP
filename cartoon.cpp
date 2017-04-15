@@ -13,11 +13,6 @@
 #include "cartoon.h"
 #include "ImageUtils.h" // Handy functions for debugging OpenCV images, by Shervin Emami.
 
-void test()
-{
-
-}
-
 // Convert the given photo into a cartoon-like or painting-like image.
 // Set sketchMode to true if you want a line drawing instead of a painting.
 // Set alienMode to true if you want alien skin instead of human.

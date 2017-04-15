@@ -1,4 +1,5 @@
 #ifndef CARTOON_H
+#define CARTOON_H
 /*****************************************************************************
 *   cartoon.h
 *   Create a cartoon-like or painting-like image filter.
@@ -10,7 +11,7 @@
 *   Copyright Packt Publishing 2012.
 *   http://www.packtpub.com/cool-projects-with-opencv/book
 *****************************************************************************/
-#define CARTOON_H
+
 
 #include <stdio.h>
 #include <iostream>
@@ -23,7 +24,6 @@
 using namespace cv;
 using namespace std;
 
-void test();
 
 // Convert the given photo into a cartoon-like or painting-like image.
 // Set sketchMode to true if you want a line drawing instead of a painting.

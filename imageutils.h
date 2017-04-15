@@ -20,7 +20,7 @@
 //#include <cvaux.h>
 #include <opencv/cxcore.h>
 #ifdef USE_HIGHGUI
-    #include <highgui.h>
+    #include <opencv/highgui.h>
 #endif
 
 
