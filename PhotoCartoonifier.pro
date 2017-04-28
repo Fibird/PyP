@@ -40,3 +40,6 @@ else:unix: LIBS += -LD:/opencv3.0/opencv/build/x64/vc14/lib/ -lopencv_world310
 
 INCLUDEPATH += D:/opencv3.0/opencv/build/include
 DEPENDPATH += D:/opencv3.0/opencv/build/include
+
+RESOURCES += \
+    cpresources.qrc

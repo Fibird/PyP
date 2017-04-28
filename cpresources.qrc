@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/menu_icon">
+        <file alias="open-image">images/open_images.png</file>
+        <file alias="image-save">images/save_image.png</file>
+        <file alias="about">images/about.png</file>
+        <file alias="help">images/help.png</file>
+    </qresource>
+    <qresource prefix="/app_icon">
+        <file alias="app-icon">images/app_icon.png</file>
+    </qresource>
+</RCC>

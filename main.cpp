@@ -101,91 +101,17 @@ void onKeypress(char key)
 
 int main(int argc, char *argv[])
 {
-    //QApplication a(argc, argv);
-    //MainWindow w;
-    //w.show();
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
 
-    //return a.exec();
+    return a.exec();
     //Mat image = imread("lena.jpg", CV_LOAD_IMAGE_COLOR);
     //Mat dst = image.clone();
     //cartoonifyImage(image, dst, false, false, false, 0);
     //namedWindow("Cartoon");
     //imshow("cartoon", dst);
     //waitKey(0);
-    cout << "Cartoonifier, by Shervin Emami (www.shervinemami.info), June 2012." << endl;
-        cout << "Converts real-life images to cartoon-like images." << endl;
-        cout << "Compiled with OpenCV version " << CV_VERSION << endl;
-        cout << endl;
 
-        cout << "Keyboard commands (press in the GUI window):" << endl;
-        cout << "    Esc:  Quit the program." << endl;
-        cout << "    s:    change Sketch / Paint mode." << endl;
-        cout << "    a:    change Alien / Human mode." << endl;
-        cout << "    e:    change Evil / Good character mode." << endl;
-        cout << "    d:    change debug mode." << endl;
-        cout << endl;
-
-        // Allow the user to specify a camera number, since not all computers will be the same camera number.
-        int cameraNumber = 0;   // Change this if you want to use a different camera device.
-        if (argc > 1) {
-            cameraNumber = atoi(argv[1]);
-        }
-
-        // Get access to the camera.
-        VideoCapture camera;
-        initWebcam(camera, cameraNumber);
-
-        // Try to set the camera resolution. Note that this only works for some cameras on
-        // some computers and only for some drivers, so don't rely on it to work!
-        camera.set(CV_CAP_PROP_FRAME_WIDTH, DESIRED_CAMERA_WIDTH);
-        camera.set(CV_CAP_PROP_FRAME_HEIGHT, DESIRED_CAMERA_HEIGHT);
-
-        // Create a GUI window for display on the screen.
-        namedWindow(windowName); // Resizable window, might not work on Windows.
-
-        // Run forever, until the user hits Escape to "break" out of this loop.
-        while (true) {
-
-            // Grab the next camera frame. Note that you can't modify camera frames.
-            Mat cameraFrame;
-            camera >> cameraFrame;
-            if( cameraFrame.empty() ) {
-                cerr << "ERROR: Couldn't grab the next camera frame." << endl;
-                exit(1);
-            }
-
-            Mat displayedFrame = Mat(cameraFrame.size(), CV_8UC3);
-
-            // Use debug type 2 (for desktop) if debug mode is enabled.
-            int debugType = 0;
-            if (m_debugMode)
-                debugType = 2;
-
-            // Run the cartoonifier filter using the selected mode.
-            cartoonifyImage(cameraFrame, displayedFrame, m_sketchMode, m_alienMode, m_evilMode, debugType);
-
-            // Show a stick-figure outline of a face for a short duration, so the user knows where to put their face.
-            if (m_stickFigureIterations > 0) {
-                drawFaceStickFigure(displayedFrame);
-                m_stickFigureIterations--;
-            }
-
-            imshow(windowName, displayedFrame);
-
-            // IMPORTANT: Wait for atleast 20 milliseconds, so that the image can be displayed on the screen!
-            // Also checks if a key was pressed in the GUI window. Note that it should be a "char" to support Linux.
-            char keypress = waitKey(20);  // This is needed if you want to see anything!
-            if (keypress == VK_ESCAPE) {   // Escape Key
-                // Quit the program!
-                break;
-            }
-            // Process any other keypresses.
-            if (keypress > 0) {
-                onKeypress(keypress);
-            }
-
-        }//end while
-
-        //return EXIT_SUCCESS;
-    return 0;
+    //return 0;
 }
