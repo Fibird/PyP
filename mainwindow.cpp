@@ -1,15 +1,20 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
+#include <QImage>
+#include <QPixmap>
+#include <QMessageBox>
+
+// OpenCV libray headers
 #include <opencv2/opencv.hpp>
 #include <opencv/cv.h>
 #include <opencv2/imgproc.hpp>
-#include <QImage>
-#include <QPixmap>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    loadedImage(),
+    savedImage()
 {
     ui->setupUi(this);
 }
@@ -23,15 +28,30 @@ void MainWindow::on_action_Open_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"),
                                                     ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
-    loadedImage = cv::imread(fileName.toUtf8().toStdString());
+    savedImage = loadedImage = cv::imread(fileName.toUtf8().toStdString());
     displayMat(loadedImage);
 }
 
 void MainWindow::displayMat(cv::Mat displayedImage)
 {
-
     QImage transfromedImg;
-    transfromedImg = mat2QImage(displayedImage);
+    cv::Mat tempRgb;
+    // Convert Mat BGR to QImage RGB
+    if (displayedImage.channels() == 3)
+    {
+        cv::cvtColor(displayedImage, tempRgb, CV_BGR2RGB);
+        transfromedImg = QImage((const unsigned char*)(tempRgb.data),
+                    tempRgb.cols, tempRgb.rows,
+                    tempRgb.cols * tempRgb.channels(),
+                    QImage::Format_RGB888);
+    }
+    else
+    {
+        transfromedImg = QImage((const unsigned char*)(tempRgb.data),
+                    tempRgb.cols, tempRgb.rows,
+                    tempRgb.cols * tempRgb.channels(),
+                    QImage::Format_RGB888);
+    }
     scene = new QGraphicsScene(this);
     QPixmap showedPixImg = QPixmap::fromImage(transfromedImg);
 
@@ -40,35 +60,21 @@ void MainWindow::displayMat(cv::Mat displayedImage)
     ui->ImageGraphicsView->setScene(scene);
 }
 
-QImage MainWindow::mat2QImage(cv::Mat m)
+void MainWindow::on_action_Save_triggered()
 {
-    cv::Mat tempRgb;
-    QImage q;
-    if (m.channels() == 3)
+    if (savedImage.empty())
     {
-        // Convert Mat BGR to QImage RGB
-        cv::cvtColor(m, tempRgb, CV_BGR2RGB);
-        q = QImage((const unsigned char*)(tempRgb.data),
-                                tempRgb.cols, tempRgb.rows,
-                                tempRgb.cols * tempRgb.channels(),
-                                QImage::Format_RGB888);
+        QMessageBox::information(this, "Can't save null image!", "There is no image to be saved! Please open a new file and process it!");
     }
     else
     {
-        q = QImage((const unsigned char*)(tempRgb.data),
-                                tempRgb.cols, tempRgb.rows,
-                                tempRgb.cols * tempRgb.channels(),
-                                QImage::Format_RGB888);
+        QString imagePath = QFileDialog::getSaveFileName(this,
+                                                         tr("Save File"),
+                                                         ".",
+                                                         tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
+        if (!imagePath.isEmpty())
+        {
+            cv::imwrite(imagePath.toStdString(), savedImage);
+        }
     }
-    return q;
-}
-
-void MainWindow::qImage2Mat(QImage &q, cv::Mat &m)
-{
-
-}
-
-void MainWindow::on_action_Save_triggered()
-{
-
 }

@@ -30,8 +30,6 @@ private:
     cv::Mat savedImage;
 private:
     void displayMat(cv::Mat displayedImage);
-    QImage mat2QImage(cv::Mat m);
-    void qImage2Mat(QImage &q, cv::Mat &m);
 };
 
 #endif // MAINWINDOW_H
