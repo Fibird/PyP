@@ -14,7 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     loadedImage(),
-    savedImage()
+    savedImage(),
+    cartoonifier()
 {
     ui->setupUi(this);
 }
@@ -30,8 +31,9 @@ void MainWindow::on_action_Open_triggered()
                                                     ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
     if (!fileName.isEmpty())
     {
-        savedImage = loadedImage = cv::imread(fileName.toUtf8().toStdString());
-        displayMat(loadedImage);
+        //savedImage = loadedImage = cv::imread(fileName.toUtf8().toStdString());
+        cartoonifier.setInputImage(fileName.toStdString());
+        displayMat(cartoonifier.getInputMat());
     }
 }
 
@@ -65,6 +67,7 @@ void MainWindow::displayMat(cv::Mat displayedImage)
 
 void MainWindow::on_action_Save_triggered()
 {
+    savedImage = cartoonifier.getLastResult();
     if (savedImage.empty())
     {
         QMessageBox::information(this, "Can't save null image!", "There is no image to be saved! Please open a new file and process it!");
@@ -85,4 +88,61 @@ void MainWindow::on_action_Save_triggered()
 void MainWindow::on_action_About_triggered()
 {
     QMessageBox::about(this, tr("About this application"), tr("Copyright(c)2017 Chaoyang Liu, Yue Shi.\nThis software is under GPLv3.0 license."));
+}
+
+void MainWindow::on_action_Painting_triggered()
+{
+    if (!cartoonifier.getInputMat().empty())
+    {
+        cartoonifier.cartoonifyImage(false, false, false, false);
+        updateDisplay();
+    }
+    else
+    {
+        QMessageBox::information(this, "No Image", "There is no image to be processed!");
+    }
+}
+
+void MainWindow::updateDisplay()
+{
+    displayMat(cartoonifier.getLastResult());
+}
+
+void MainWindow::on_action_Sketch_triggered()
+{
+    if (!cartoonifier.getInputMat().empty())
+    {
+        cartoonifier.cartoonifyImage(true, false, false, false);
+        updateDisplay();
+    }
+    else
+    {
+        QMessageBox::information(this, "No Image", "There is no image to be processed!");
+    }
+}
+
+void MainWindow::on_action_Evil_triggered()
+{
+    if (!cartoonifier.getInputMat().empty())
+    {
+        cartoonifier.cartoonifyImage(false, true, false, false);
+        updateDisplay();
+    }
+    else
+    {
+        QMessageBox::information(this, "No Image", "There is no image to be processed!");
+    }
+}
+
+void MainWindow::on_action_Alian_triggered()
+{
+    if (!cartoonifier.getInputMat().empty())
+    {
+        cartoonifier.cartoonifyImage(false, false, true, false);
+        updateDisplay();
+    }
+    else
+    {
+        QMessageBox::information(this, "No Image", "There is no image to be processed!");
+    }
 }

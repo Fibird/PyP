@@ -289,3 +289,12 @@ void Cartoonifier::drawFaceStickFigure(Mat dst)
     addWeighted(dst, 1.0, faceOutline, 0.7, 0, dst, CV_8UC3);
 }
 
+const Mat Cartoonifier::getLastResult() const
+{
+    return result;
+}
+
+Cartoonifier::~Cartoonifier()
+{
+
+}

@@ -13,6 +13,8 @@ public:
     bool setInputImage(std::string filename);
     const Mat getInputMat() const;
     void cartoonifyImage(bool sketchMode, bool alienMode, bool evilMode, int debugType);
+    const Mat getLastResult() const;
+    ~Cartoonifier();
 private:
     Mat image;
     Mat result;
