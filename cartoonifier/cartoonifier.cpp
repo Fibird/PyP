@@ -1,33 +1,40 @@
-/*****************************************************************************
-*   cartoon.cpp
-*   Create a cartoon-like or painting-like image filter.
-******************************************************************************
-*   by Shervin Emami, 5th Dec 2012 (shervin.emami@gmail.com)
-*   http://www.shervinemami.info/
-******************************************************************************
-*   Ch1 of the book "Mastering OpenCV with Practical Computer Vision Projects"
-*   Copyright Packt Publishing 2012.
-*   http://www.packtpub.com/cool-projects-with-opencv/book
-*****************************************************************************/
+#include "cartoonifier.h"
+#include "opencv2/imgproc.hpp"
 
-#include "cartoon.h"
-#include "ImageUtils.h" // Handy functions for debugging OpenCV images, by Shervin Emami.
+Cartoonifier::Cartoonifier()
+{
+
+}
+
+bool Cartoonifier::setInputImage(std::string filename)
+{
+    image = cv::imread(filename);
+    if (!image.data)
+        return false;
+    else
+        return true;
+}
+
+const Mat Cartoonifier::getInputMat() const
+{
+    return image;
+}
 
 // Convert the given photo into a cartoon-like or painting-like image.
 // Set sketchMode to true if you want a line drawing instead of a painting.
 // Set alienMode to true if you want alien skin instead of human.
 // Set evilMode to true if you want an "evil" character instead of a "good" character.
 // Set debugType to 1 to show where skin color is taken from, and 2 to show the skin mask in a new window (for desktop).
-void cartoonifyImage(Mat srcColor, Mat dst, bool sketchMode, bool alienMode, bool evilMode, int debugType)
+void Cartoonifier::cartoonifyImage(bool sketchMode, bool alienMode, bool evilMode, int debugType)
 {
     // Convert from BGR color to Grayscale
     Mat srcGray;
-    cvtColor(srcColor, srcGray, CV_BGR2GRAY);
+    cvtColor(image, srcGray, CV_BGR2GRAY);
 
     // Remove the pixel noise with a good Median filter, before we start detecting edges.
     medianBlur(srcGray, srcGray, 7);
 
-    Size size = srcColor.size();
+    Size size = image.size();
     Mat mask = Mat(size, CV_8U);
     Mat edges = Mat(size, CV_8U);
     if (!evilMode) {
@@ -54,7 +61,7 @@ void cartoonifyImage(Mat srcColor, Mat dst, bool sketchMode, bool alienMode, boo
     // For sketch mode, we just need the mask!
     if (sketchMode) {
         // The output image has 3 channels, not a single channel.
-        cvtColor(mask, dst, CV_GRAY2BGR);
+        cvtColor(mask, result, CV_GRAY2BGR);
         return;
     }
 
@@ -64,7 +71,7 @@ void cartoonifyImage(Mat srcColor, Mat dst, bool sketchMode, bool alienMode, boo
     smallSize.width = size.width/2;
     smallSize.height = size.height/2;
     Mat smallImg = Mat(smallSize, CV_8UC3);
-    resize(srcColor, smallImg, smallSize, 0,0, INTER_LINEAR);
+    resize(image, smallImg, smallSize, 0,0, INTER_LINEAR);
 
     // Perform many iterations of weak bilateral filtering, to enhance the edges
     // while blurring the flat regions, like a cartoon.
@@ -85,20 +92,20 @@ void cartoonifyImage(Mat srcColor, Mat dst, bool sketchMode, bool alienMode, boo
     }
 
     // Go back to the original scale.
-    resize(smallImg, srcColor, size, 0,0, INTER_LINEAR);
+    resize(smallImg, image, size, 0,0, INTER_LINEAR);
 
     // Clear the output image to black, so that the cartoon line drawings will be black (ie: not drawn).
-    memset((char*)dst.data, 0, dst.step * dst.rows);
+    memset((char*)result.data, 0, result.step * result.rows);
 
     // Use the blurry cartoon image, except for the strong edges that we will leave black.
-    srcColor.copyTo(dst, mask);
+    image.copyTo(result, mask);
 }
 
 
 
 // Apply an "alien" filter, when given a shrunken BGR image and the full-res edge mask.
 // Detects the color of the pixels in the middle of the image, then changes the color of that region to green.
-void changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debugType)
+void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debugType)
 {
         // Convert to Y'CrCb color-space, since it is better for skin detection and color adjustment.
         Mat yuv = Mat(smallImgBGR.size(), CV_8UC3);
@@ -170,7 +177,7 @@ void changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debugType)
 // Remove black dots (upto 4x4 in size) of noise from a pure black & white image.
 // ie: The input image should be mostly white (255) and just contains some black (0) noise
 // in addition to the black (0) edges.
-void removePepperNoise(Mat &mask)
+void Cartoonifier::removePepperNoise(Mat &mask)
 {
     // For simplicity, ignore the top & bottom row border.
     for (int y=2; y<mask.rows-2; y++) {
@@ -232,7 +239,7 @@ void removePepperNoise(Mat &mask)
 // Draw an anti-aliased face outline, so the user knows where to put their face.
 // Note that the skin detector for "alien" mode uses points around the face based on the face
 // dimensions shown by this function.
-void drawFaceStickFigure(Mat dst)
+void Cartoonifier::drawFaceStickFigure(Mat dst)
 {
     Size size = dst.size();
     int sw = size.width;
@@ -281,3 +288,4 @@ void drawFaceStickFigure(Mat dst)
     // Overlay the outline with alpha blending.
     addWeighted(dst, 1.0, faceOutline, 0.7, 0, dst, CV_8UC3);
 }
+

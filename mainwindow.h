@@ -5,6 +5,7 @@
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <QGraphicsScene>
+#include "cartoonifier/cartoonifier.h"
 
 namespace Ui {
 class MainWindow;

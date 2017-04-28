@@ -28,8 +28,11 @@ void MainWindow::on_action_Open_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"),
                                                     ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
-    savedImage = loadedImage = cv::imread(fileName.toUtf8().toStdString());
-    displayMat(loadedImage);
+    if (!fileName.isEmpty())
+    {
+        savedImage = loadedImage = cv::imread(fileName.toUtf8().toStdString());
+        displayMat(loadedImage);
+    }
 }
 
 void MainWindow::displayMat(cv::Mat displayedImage)
