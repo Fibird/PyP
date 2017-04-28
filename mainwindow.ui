@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="cpresources.qrc">
+    <normaloff>:/app_icon/app-icon</normaloff>:/app_icon/app-icon</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
@@ -78,10 +82,13 @@
   <action name="action_About">
    <property name="icon">
     <iconset resource="cpresources.qrc">
-     <normaloff>:/menu_icon/help</normaloff>:/menu_icon/help</iconset>
+     <normaloff>:/menu_icon/about</normaloff>:/menu_icon/about</iconset>
    </property>
    <property name="text">
     <string>&amp;About</string>
+   </property>
+   <property name="statusTip">
+    <string>about this software</string>
    </property>
   </action>
   <action name="action_Save">
@@ -93,7 +100,7 @@
     <string>&amp;Save</string>
    </property>
    <property name="statusTip">
-    <string>Save image</string>
+    <string>save current image</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>

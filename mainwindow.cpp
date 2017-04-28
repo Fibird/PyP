@@ -78,3 +78,8 @@ void MainWindow::on_action_Save_triggered()
         }
     }
 }
+
+void MainWindow::on_action_About_triggered()
+{
+    QMessageBox::about(this, tr("About this application"), tr("Copyright(c)2017 Chaoyang Liu, Yue Shi.\nThis software is under GPLv3.0 license."));
+}

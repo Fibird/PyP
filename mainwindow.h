@@ -23,6 +23,8 @@ private slots:
 
     void on_action_Save_triggered();
 
+    void on_action_About_triggered();
+
 private:
     Ui::MainWindow *ui;
     cv::Mat loadedImage;
