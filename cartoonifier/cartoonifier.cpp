@@ -37,6 +37,7 @@ void Cartoonifier::cartoonifyImage(bool sketchMode, bool alienMode, bool evilMod
     Size size = image.size();
     Mat mask = Mat(size, CV_8U);
     Mat edges = Mat(size, CV_8U);
+
     if (!evilMode) {
         // Generate a nice edge mask, similar to a pencil line drawing.
         Laplacian(srcGray, edges, CV_8U, 5);
@@ -130,7 +131,7 @@ void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debu
         // YCrCb Skin detector and color changer using multiple flood fills into a mask.
         // Apply flood fill on many points around the face, to cover different shades & colors of the face.
         // Note that these values are dependent on the face outline, drawn in drawFaceStickFigure().
-        int const NUM_SKIN_POINTS = 6;
+        int const NUM_SKIN_POINTS = 2;
         Point skinPts[NUM_SKIN_POINTS];
         skinPts[0] = Point(sw/2,          sh/2 - sh/6);
         skinPts[1] = Point(sw/2 - sw/11,  sh/2 - sh/6);
@@ -151,6 +152,7 @@ void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debu
         // Instead of drawing into the "yuv" image, just draw 1's into the "maskPlusBorder" image, so we can apply it later.
         // The "maskPlusBorder" is initialized with the edges, because floodFill() will not go across non-zero mask pixels.
         Mat edgeMask = mask.clone();    // Keep an duplicate copy of the edge mask.
+
         for (int i=0; i<NUM_SKIN_POINTS; i++) {
             // Use the floodFill() mode that stores to an external mask, instead of the input image.
             const int flags = 4 | FLOODFILL_FIXED_RANGE | FLOODFILL_MASK_ONLY;
@@ -159,7 +161,7 @@ void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debu
                 circle(smallImgBGR, skinPts[i], 5, CV_RGB(0, 0, 255), 1, CV_AA);
         }
         if (debugType >= 2)
-            imshow("flood mask", mask*120); // Draw the edges as white and the skin region as grey.
+            //imshow("flood mask", mask*120); // Draw the edges as white and the skin region as grey.
 
         // After the flood fill, "mask" contains both edges and skin pixels, whereas
         // "edgeMask" just contains edges. So to get just the skin pixels, we can remove the edges from it.
