@@ -131,12 +131,12 @@ void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debu
         // YCrCb Skin detector and color changer using multiple flood fills into a mask.
         // Apply flood fill on many points around the face, to cover different shades & colors of the face.
         // Note that these values are dependent on the face outline, drawn in drawFaceStickFigure().
-        int const NUM_SKIN_POINTS = 2;
+        int const NUM_SKIN_POINTS = 6;
         Point skinPts[NUM_SKIN_POINTS];
         skinPts[0] = Point(sw/2,          sh/2 - sh/6);
         skinPts[1] = Point(sw/2 - sw/11,  sh/2 - sh/6);
-        skinPts[2] = Point(sw/2 + sw/11,  sh/2 - sh/6);
-        skinPts[3] = Point(sw/2,          sh/2 + sh/16);
+        skinPts[2] = Point(sw/2 - sw/11,  sh/2 - sh/6);
+        skinPts[3] = Point(sw/2,          sh/2 - sh/6);
         skinPts[4] = Point(sw/2 - sw/9,   sh/2 + sh/16);
         skinPts[5] = Point(sw/2 + sw/9,   sh/2 + sh/16);
         // Skin might be fairly dark, or slightly less colorful.
