@@ -161,7 +161,7 @@ void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debu
                 circle(smallImgBGR, skinPts[i], 5, CV_RGB(0, 0, 255), 1, CV_AA);
         }
         if (debugType >= 2)
-            //imshow("flood mask", mask*120); // Draw the edges as white and the skin region as grey.
+            imshow("flood mask", mask*120); // Draw the edges as white and the skin region as grey.
 
         // After the flood fill, "mask" contains both edges and skin pixels, whereas
         // "edgeMask" just contains edges. So to get just the skin pixels, we can remove the edges from it.
