@@ -296,6 +296,11 @@ const Mat Cartoonifier::getLastResult() const
     return result;
 }
 
+void Cartoonifier::resetResult()
+{
+    result = image.clone();
+}
+
 Cartoonifier::~Cartoonifier()
 {
 

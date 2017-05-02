@@ -20,7 +20,11 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0" rowspan="3">
-     <widget class="QGraphicsView" name="ImageGraphicsView"/>
+     <widget class="QGraphicsView" name="ImageGraphicsView">
+      <property name="cursor" stdset="0">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -40,6 +44,7 @@
     <addaction name="action_Open"/>
     <addaction name="action_Save"/>
     <addaction name="actionSave_as"/>
+    <addaction name="action_undo"/>
     <addaction name="action_Exit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -69,6 +74,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_Open"/>
+   <addaction name="action_undo"/>
    <addaction name="action_Save"/>
    <addaction name="action_About"/>
    <addaction name="separator"/>
@@ -135,6 +141,10 @@
    </property>
   </action>
   <action name="actionSave_as">
+   <property name="icon">
+    <iconset resource="cpresources.qrc">
+     <normaloff>:/menu_icon/save-as-icon</normaloff>:/menu_icon/save-as-icon</iconset>
+   </property>
    <property name="text">
     <string>Save &amp;as</string>
    </property>
@@ -191,6 +201,21 @@
    </property>
    <property name="text">
     <string>&amp;Alien</string>
+   </property>
+  </action>
+  <action name="action_undo">
+   <property name="icon">
+    <iconset resource="cpresources.qrc">
+     <normaloff>:/menu_icon/undo-icon</normaloff>:/menu_icon/undo-icon</iconset>
+   </property>
+   <property name="text">
+    <string>undo</string>
+   </property>
+   <property name="statusTip">
+    <string>undo changes</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
    </property>
   </action>
  </widget>

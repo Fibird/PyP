@@ -14,6 +14,7 @@ public:
     const Mat getInputMat() const;
     void cartoonifyImage(bool sketchMode, bool alienMode, bool evilMode, int debugType);
     const Mat getLastResult() const;
+    void resetResult();
     ~Cartoonifier();
 private:
     Mat image;

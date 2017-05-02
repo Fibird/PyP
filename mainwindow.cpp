@@ -146,3 +146,9 @@ void MainWindow::on_action_Alian_triggered()
         QMessageBox::information(this, "No Image", "There is no image to be processed!");
     }
 }
+
+void MainWindow::on_action_undo_triggered()
+{
+    cartoonifier.resetResult();
+    updateDisplay();
+}

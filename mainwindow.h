@@ -34,6 +34,8 @@ private slots:
 
     void on_action_Alian_triggered();
 
+    void on_action_undo_triggered();
+
 private:
     Ui::MainWindow *ui;
     cv::Mat loadedImage;

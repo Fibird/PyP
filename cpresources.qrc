@@ -9,6 +9,8 @@
         <file alias="sketch-proc">images/hand_sketch.png</file>
         <file alias="painting-proc">images/painting_process.png</file>
         <file alias="exit-icon">images/exit.png</file>
+        <file alias="undo-icon">images/undo.png</file>
+        <file alias="save-as-icon">images/save_as.png</file>
     </qresource>
     <qresource prefix="/app_icon">
         <file alias="app-icon">images/app_icon.png</file>
