@@ -175,6 +175,12 @@
    <property name="text">
     <string>&amp;Painting</string>
    </property>
+   <property name="toolTip">
+    <string>painting process</string>
+   </property>
+   <property name="statusTip">
+    <string>make image like a paint</string>
+   </property>
   </action>
   <action name="action_Sketch">
    <property name="icon">
@@ -184,6 +190,12 @@
    <property name="text">
     <string>&amp;Sketch</string>
    </property>
+   <property name="toolTip">
+    <string>sketch process</string>
+   </property>
+   <property name="statusTip">
+    <string>make image like a sketch</string>
+   </property>
   </action>
   <action name="action_Evil">
    <property name="icon">
@@ -192,6 +204,12 @@
    </property>
    <property name="text">
     <string>&amp;Evil</string>
+   </property>
+   <property name="toolTip">
+    <string>evil process</string>
+   </property>
+   <property name="statusTip">
+    <string>make image like an evil</string>
    </property>
   </action>
   <action name="action_Alian">
