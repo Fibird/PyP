@@ -11,6 +11,7 @@ class Cartoonifier
 public:
     Cartoonifier();
     bool setInputImage(std::string filename);
+    void setInputImage(Mat img);
     const Mat getInputMat() const;
     void cartoonifyImage(bool sketchMode, bool alienMode, bool evilMode, int debugType);
     const Mat getLastResult() const;

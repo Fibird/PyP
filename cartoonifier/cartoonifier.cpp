@@ -29,7 +29,8 @@ void Cartoonifier::cartoonifyImage(bool sketchMode, bool alienMode, bool evilMod
 {
     // Convert from BGR color to Grayscale
     Mat srcGray;
-    cvtColor(image, srcGray, CV_BGR2GRAY);
+    Mat srcColor = image.clone();
+    cvtColor(srcColor, srcGray, CV_BGR2GRAY);
 
     // Remove the pixel noise with a good Median filter, before we start detecting edges.
     medianBlur(srcGray, srcGray, 7);
@@ -72,7 +73,7 @@ void Cartoonifier::cartoonifyImage(bool sketchMode, bool alienMode, bool evilMod
     smallSize.width = size.width/2;
     smallSize.height = size.height/2;
     Mat smallImg = Mat(smallSize, CV_8UC3);
-    resize(image, smallImg, smallSize, 0,0, INTER_LINEAR);
+    resize(srcColor, smallImg, smallSize, 0,0, INTER_LINEAR);
 
     // Perform many iterations of weak bilateral filtering, to enhance the edges
     // while blurring the flat regions, like a cartoon.
@@ -93,7 +94,7 @@ void Cartoonifier::cartoonifyImage(bool sketchMode, bool alienMode, bool evilMod
     }
 
     // Go back to the original scale.
-    resize(smallImg, image, size, 0,0, INTER_LINEAR);
+    resize(smallImg, srcColor, size, 0,0, INTER_LINEAR);
 
     // Clear the output image to black, so that the cartoon line drawings will be black (ie: not drawn).
     memset((char*)result.data, 0, result.step * result.rows);
@@ -304,4 +305,9 @@ void Cartoonifier::resetResult()
 Cartoonifier::~Cartoonifier()
 {
 
+}
+
+void Cartoonifier::setInputImage(Mat img)
+{
+    image = img.clone();
 }

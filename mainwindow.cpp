@@ -31,7 +31,7 @@ void MainWindow::on_action_Open_triggered()
                                                     ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
     if (!fileName.isEmpty())
     {
-        //savedImage = loadedImage = cv::imread(fileName.toUtf8().toStdString());
+        loadedImage = cv::imread(fileName.toUtf8().toStdString());
         cartoonifier.setInputImage(fileName.toStdString());
         displayMat(cartoonifier.getInputMat());
     }
@@ -149,6 +149,7 @@ void MainWindow::on_action_Alian_triggered()
 
 void MainWindow::on_action_undo_triggered()
 {
+    //cartoonifier.setInputImage(loadedImage);
     cartoonifier.resetResult();
     updateDisplay();
 }
