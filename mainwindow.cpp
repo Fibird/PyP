@@ -4,6 +4,7 @@
 #include <QImage>
 #include <QPixmap>
 #include <QMessageBox>
+#include <QKeyEvent>
 
 // OpenCV libray headers
 #include <opencv2/opencv.hpp>
@@ -59,7 +60,6 @@ void MainWindow::displayMat(cv::Mat displayedImage)
     }
     scene = new QGraphicsScene(this);
     QPixmap showedPixImg = QPixmap::fromImage(transfromedImg);
-
     scene->addPixmap(showedPixImg);
     scene->setSceneRect(showedPixImg.rect());
     ui->ImageGraphicsView->setScene(scene);
@@ -152,4 +152,19 @@ void MainWindow::on_action_undo_triggered()
     //cartoonifier.setInputImage(loadedImage);
     cartoonifier.resetResult();
     updateDisplay();
+}
+
+void MainWindow::wheelEvent(QWheelEvent *event)
+{
+    if(QApplication::keyboardModifiers() == Qt::ControlModifier)
+    {
+        if(event->delta() > 0)
+        {
+            ui->ImageGraphicsView->scale(1.1, 1.1);
+        }
+        else
+        {
+            ui->ImageGraphicsView->scale(0.9, 0.9);
+        }
+    }
 }

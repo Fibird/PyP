@@ -6,7 +6,7 @@
 #include <opencv2/highgui.hpp>
 #include <QGraphicsScene>
 #include "cartoonifier/cartoonifier.h"
-
+#include <QWheelEvent>
 namespace Ui {
 class MainWindow;
 }
@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+    void wheelEvent(QWheelEvent *event);
 private slots:
     void on_action_Open_triggered();
 
