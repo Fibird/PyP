@@ -36,12 +36,17 @@ private slots:
 
     void on_action_undo_triggered();
 
+    void on_actionSave_as_triggered();
+
+    void on_action_Exit_triggered();
+
 private:
     Ui::MainWindow *ui;
     cv::Mat loadedImage;
     QGraphicsScene *scene;
     cv::Mat savedImage;
     Cartoonifier cartoonifier;
+    QString fileName;
     void updateDisplay();
 private:
     void displayMat(cv::Mat displayedImage);

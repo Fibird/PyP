@@ -5,6 +5,8 @@
 #include <QPixmap>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QFileInfo>
+#include <QDebug>
 
 // OpenCV libray headers
 #include <opencv2/opencv.hpp>
@@ -28,12 +30,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_action_Open_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"),
+    QString fileFullPath = QFileDialog::getOpenFileName(this, tr("Open Image"),
                                                     ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
-    if (!fileName.isEmpty())
+    QFileInfo imageInfo(fileFullPath);
+    fileName = imageInfo.fileName();
+
+    if (!fileFullPath.isEmpty())
     {
-        loadedImage = cv::imread(fileName.toUtf8().toStdString());
-        cartoonifier.setInputImage(fileName.toStdString());
+        loadedImage = cv::imread(fileFullPath.toUtf8().toStdString());
+
+        cartoonifier.setInputImage(fileFullPath.toStdString());
         displayMat(cartoonifier.getInputMat());
     }
 }
@@ -76,7 +82,7 @@ void MainWindow::on_action_Save_triggered()
     {
         QString imagePath = QFileDialog::getSaveFileName(this,
                                                          tr("Save File"),
-                                                         ".",
+                                                         "." + fileName,
                                                          tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
         if (!imagePath.isEmpty())
         {
@@ -166,5 +172,33 @@ void MainWindow::wheelEvent(QWheelEvent *event)
         {
             ui->ImageGraphicsView->scale(0.9, 0.9);
         }
+    }
+}
+
+void MainWindow::on_actionSave_as_triggered()
+{
+    savedImage = cartoonifier.getLastResult();
+    if (savedImage.empty())
+    {
+        QMessageBox::information(this, "Can't save null image!", "There is no image to be saved! Please open a new file and process it!");
+    }
+    else
+    {
+        QString imagePath = QFileDialog::getSaveFileName(this,
+                                                         tr("Save File"),
+                                                         ".",
+                                                         tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
+        if (!imagePath.isEmpty())
+        {
+            cv::imwrite(imagePath.toStdString(), savedImage);
+        }
+    }
+}
+
+void MainWindow::on_action_Exit_triggered()
+{
+    if (!(QMessageBox::information(this, tr("exit"), tr("Do you really want to exit?"), tr("Yes"), tr("No"))))
+    {
+        this->close();
     }
 }

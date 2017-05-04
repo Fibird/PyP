@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Cartoonifier</string>
   </property>
   <property name="windowIcon">
    <iconset resource="cpresources.qrc">
@@ -78,6 +78,7 @@
    <addaction name="action_Save"/>
    <addaction name="action_About"/>
    <addaction name="separator"/>
+   <addaction name="action_Exit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="processToolBar">
