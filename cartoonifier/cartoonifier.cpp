@@ -311,3 +311,62 @@ void Cartoonifier::setInputImage(Mat img)
 {
     image = img.clone();
 }
+
+void Cartoonifier::paintingProcess()
+{
+    // Convert from BGR color to Grayscale
+    Mat srcGray;
+    Mat srcColor = image.clone();
+    cvtColor(srcColor, srcGray, CV_BGR2GRAY);
+
+    // Remove the pixel noise with a good Median filter, before we start detecting edges.
+    medianBlur(srcGray, srcGray, 7);
+
+    Size size = image.size();
+    Mat mask = Mat(size, CV_8U);
+    Mat edges = Mat(size, CV_8U);
+
+
+    // Generate a nice edge mask, similar to a pencil line drawing.
+    Laplacian(srcGray, edges, CV_8U, 5);
+    threshold(edges, mask, 80, 255, THRESH_BINARY_INV);
+    // Mobile cameras usually have lots of noise, so remove small
+    // dots of black noise from the black & white edge mask.
+    removePepperNoise(mask);
+
+
+    // Do the bilateral filtering at a shrunken scale, since it
+    // runs so slowly but doesn't need full resolution for a good effect.
+    Size smallSize;
+    smallSize.width = size.width/2;
+    smallSize.height = size.height/2;
+    Mat smallImg = Mat(smallSize, CV_8UC3);
+    resize(srcColor, smallImg, smallSize, 0,0, INTER_LINEAR);
+
+    // Perform many iterations of weak bilateral filtering, to enhance the edges
+    // while blurring the flat regions, like a cartoon.
+    Mat tmp = Mat(smallSize, CV_8UC3);
+    int repetitions = 20;        // Repetitions for strong cartoon effect.
+    for (int i=0; i<repetitions; i++) {
+        int size = 9;           // Filter size. Has a large effect on speed.
+        double sigmaColor = 15;  // Filter color strength.
+        double sigmaSpace = 7;  // Positional strength. Effects speed.
+        bilateralFilter(smallImg, tmp, size, sigmaColor, sigmaSpace);
+        bilateralFilter(tmp, smallImg, size, sigmaColor, sigmaSpace);
+    }
+
+    // Go back to the original scale.
+    resize(smallImg, srcColor, size, 0,0, INTER_LINEAR);
+
+    // Clear the output image to black, so that the cartoon line drawings will be black (ie: not drawn).
+    memset((char*)result.data, 0, result.step * result.rows);
+
+    // Use the blurry cartoon image, except for the strong edges that we will leave black.
+    image.copyTo(result, mask);
+}
+
+void Cartoonifier::alienProcess()
+{
+    paintingProcess();
+    result = 255 - result;
+}

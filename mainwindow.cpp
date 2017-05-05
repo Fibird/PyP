@@ -101,6 +101,7 @@ void MainWindow::on_action_Painting_triggered()
     if (!cartoonifier.getInputMat().empty())
     {
         cartoonifier.cartoonifyImage(false, false, false, false);
+        //cartoonifier.paintingProcess();
         updateDisplay();
     }
     else
@@ -144,7 +145,8 @@ void MainWindow::on_action_Alian_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        cartoonifier.cartoonifyImage(false, true, false, false);
+        //cartoonifier.cartoonifyImage(false, true, false, false);
+        cartoonifier.alienProcess();
         updateDisplay();
     }
     else
