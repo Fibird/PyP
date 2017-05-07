@@ -22,7 +22,7 @@
     <item row="0" column="0" rowspan="3">
      <widget class="QGraphicsView" name="ImageGraphicsView">
       <property name="cursor" stdset="0">
-       <cursorShape>ArrowCursor</cursorShape>
+       <cursorShape>CrossCursor</cursorShape>
       </property>
      </widget>
     </item>
