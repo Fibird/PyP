@@ -13,15 +13,15 @@ public:
     bool setInputImage(std::string filename);
     void setInputImage(Mat img);
     const Mat getInputMat() const;
+    const Mat getLastResult() const;
+    void resetResult();
+    Mat getEvil();
+    Mat getSketch();
     void cartoonifyImage(bool sketchMode, bool alienMode, bool evilMode, int debugType);
     void paintingProcess();
     void alienProcess();
-    const Mat getLastResult() const;
-    void resetResult();
     void sketchProcess();
     void evilProcess();
-    Mat getEvil();
-    Mat getSketch();
     ~Cartoonifier();
 private:
     Mat image;
