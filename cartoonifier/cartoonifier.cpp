@@ -346,7 +346,7 @@ void Cartoonifier::paintingProcess()
     // Perform many iterations of weak bilateral filtering, to enhance the edges
     // while blurring the flat regions, like a cartoon.
     Mat tmp = Mat(smallSize, CV_8UC3);
-    int repetitions = 20;        // Repetitions for strong cartoon effect.
+    int repetitions = 7;        // Repetitions for strong cartoon effect.
     for (int i=0; i<repetitions; i++) {
         int size = 9;           // Filter size. Has a large effect on speed.
         double sigmaColor = 15;  // Filter color strength.
@@ -363,8 +363,8 @@ void Cartoonifier::paintingProcess()
 
     // Use the blurry cartoon image, except for the strong edges that we will leave black.
     image.copyTo(result, mask);
-    Mat pencil_bg = imread("img/pencil_bg.jpg");
-    double alpha = 0.8;
+    Mat pencil_bg = imread("img/canvas_bg2.jpg");
+    double alpha = 0.7;
     double beta = 1 - alpha;
     resize(pencil_bg, pencil_bg, result.size());
     addWeighted(result, alpha, pencil_bg, beta, 0.0, result);
