@@ -363,10 +363,47 @@ void Cartoonifier::paintingProcess()
 
     // Use the blurry cartoon image, except for the strong edges that we will leave black.
     image.copyTo(result, mask);
+    Mat pencil_bg = imread("img/pencil_bg.jpg");
+    double alpha = 0.8;
+    double beta = 1 - alpha;
+    resize(pencil_bg, pencil_bg, result.size());
+    addWeighted(result, alpha, pencil_bg, beta, 0.0, result);
 }
 
 void Cartoonifier::alienProcess()
 {
     paintingProcess();
     result = 255 - result;
+}
+
+void Cartoonifier::sketchProcess()
+{
+    // Convert from BGR color to Grayscale
+    Mat srcGray;
+    Mat srcColor = image.clone();
+    cvtColor(srcColor, srcGray, CV_BGR2GRAY);
+
+    // Remove the pixel noise with a good Median filter, before we start detecting edges.
+    medianBlur(srcGray, srcGray, 7);
+
+    Size size = image.size();
+    Mat mask = Mat(size, CV_8U);
+    Mat edges = Mat(size, CV_8U);
+
+    // Generate a nice edge mask, similar to a pencil line drawing.
+    Laplacian(srcGray, edges, CV_8U, 5);
+    threshold(edges, mask, 80, 255, THRESH_BINARY_INV);
+    // Mobile cameras usually have lots of noise, so remove small
+    // dots of black noise from the black & white edge mask.
+    removePepperNoise(mask);
+
+    // For sketch mode, we just need the mask!
+
+    // The output image has 3 channels, not a single channel.
+    cvtColor(mask, result, CV_GRAY2BGR);
+    Mat pencil_bg = imread("img/pencil_bg.jpg");
+    double alpha = 0.6;
+    double beta = 1 - alpha;
+    resize(pencil_bg, pencil_bg, result.size());
+    addWeighted(result, alpha, pencil_bg, beta, 0.0, result);
 }

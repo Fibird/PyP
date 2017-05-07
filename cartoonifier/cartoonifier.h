@@ -18,6 +18,7 @@ public:
     void alienProcess();
     const Mat getLastResult() const;
     void resetResult();
+    void sketchProcess();
     ~Cartoonifier();
 private:
     Mat image;

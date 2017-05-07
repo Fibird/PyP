@@ -100,8 +100,8 @@ void MainWindow::on_action_Painting_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        cartoonifier.cartoonifyImage(false, false, false, false);
-        //cartoonifier.paintingProcess();
+        //cartoonifier.cartoonifyImage(false, false, false, false);
+        cartoonifier.paintingProcess();
         updateDisplay();
     }
     else
@@ -119,7 +119,8 @@ void MainWindow::on_action_Sketch_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        cartoonifier.cartoonifyImage(true, false, false, false);
+        //cartoonifier.cartoonifyImage(true, false, false, false);
+        cartoonifier.sketchProcess();
         updateDisplay();
     }
     else
