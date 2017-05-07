@@ -82,7 +82,7 @@ void MainWindow::on_action_Save_triggered()
     {
         QString imagePath = QFileDialog::getSaveFileName(this,
                                                          tr("Save File"),
-                                                         "." + fileName,
+                                                         fileName,
                                                          tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
         if (!imagePath.isEmpty())
         {
