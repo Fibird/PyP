@@ -19,6 +19,9 @@ public:
     const Mat getLastResult() const;
     void resetResult();
     void sketchProcess();
+    void evilProcess();
+    Mat getEvil();
+    Mat getSketch();
     ~Cartoonifier();
 private:
     Mat image;

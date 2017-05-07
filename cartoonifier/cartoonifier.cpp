@@ -314,27 +314,10 @@ void Cartoonifier::setInputImage(Mat img)
 
 void Cartoonifier::paintingProcess()
 {
-    // Convert from BGR color to Grayscale
-    Mat srcGray;
     Mat srcColor = image.clone();
-    cvtColor(srcColor, srcGray, CV_BGR2GRAY);
-
-    // Remove the pixel noise with a good Median filter, before we start detecting edges.
-    medianBlur(srcGray, srcGray, 7);
-
     Size size = image.size();
-    Mat mask = Mat(size, CV_8U);
-    Mat edges = Mat(size, CV_8U);
 
-
-    // Generate a nice edge mask, similar to a pencil line drawing.
-    Laplacian(srcGray, edges, CV_8U, 5);
-    threshold(edges, mask, 80, 255, THRESH_BINARY_INV);
-    // Mobile cameras usually have lots of noise, so remove small
-    // dots of black noise from the black & white edge mask.
-    removePepperNoise(mask);
-
-
+    Mat mask = getSketch();
     // Do the bilateral filtering at a shrunken scale, since it
     // runs so slowly but doesn't need full resolution for a good effect.
     Size smallSize;
@@ -378,6 +361,20 @@ void Cartoonifier::alienProcess()
 
 void Cartoonifier::sketchProcess()
 {
+    // For sketch mode, we just need the mask!
+    Mat mask = getSketch();
+    // The output image has 3 channels, not a single channel.
+    cvtColor(mask, result, CV_GRAY2BGR);
+    // Merge pencil background and result;
+    Mat pencil_bg = imread("img/pencil_bg.jpg");
+    double alpha = 0.6;
+    double beta = 1 - alpha;
+    resize(pencil_bg, pencil_bg, result.size());
+    addWeighted(result, alpha, pencil_bg, beta, 0.0, result);
+}
+
+Mat Cartoonifier::getSketch()
+{
     // Convert from BGR color to Grayscale
     Mat srcGray;
     Mat srcColor = image.clone();
@@ -396,14 +393,65 @@ void Cartoonifier::sketchProcess()
     // Mobile cameras usually have lots of noise, so remove small
     // dots of black noise from the black & white edge mask.
     removePepperNoise(mask);
+    return mask;
+}
 
-    // For sketch mode, we just need the mask!
+void Cartoonifier::evilProcess()
+{
+    Mat srcColor = image.clone();
+    Size size = image.size();
+    Mat mask = getEvil();
 
-    // The output image has 3 channels, not a single channel.
-    cvtColor(mask, result, CV_GRAY2BGR);
-    Mat pencil_bg = imread("img/pencil_bg.jpg");
-    double alpha = 0.6;
-    double beta = 1 - alpha;
-    resize(pencil_bg, pencil_bg, result.size());
-    addWeighted(result, alpha, pencil_bg, beta, 0.0, result);
+    // Do the bilateral filtering at a shrunken scale, since it
+    // runs so slowly but doesn't need full resolution for a good effect.
+    Size smallSize;
+    smallSize.width = size.width/2;
+    smallSize.height = size.height/2;
+    Mat smallImg = Mat(smallSize, CV_8UC3);
+    resize(srcColor, smallImg, smallSize, 0,0, INTER_LINEAR);
+
+    // Perform many iterations of weak bilateral filtering, to enhance the edges
+    // while blurring the flat regions, like a cartoon.
+    Mat tmp = Mat(smallSize, CV_8UC3);
+    int repetitions = 7;        // Repetitions for strong cartoon effect.
+    for (int i=0; i<repetitions; i++) {
+        int size = 9;           // Filter size. Has a large effect on speed.
+        double sigmaColor = 15;  // Filter color strength.
+        double sigmaSpace = 7;  // Positional strength. Effects speed.
+        bilateralFilter(smallImg, tmp, size, sigmaColor, sigmaSpace);
+        bilateralFilter(tmp, smallImg, size, sigmaColor, sigmaSpace);
+    }
+
+    // Go back to the original scale.
+    resize(smallImg, srcColor, size, 0,0, INTER_LINEAR);
+
+    // Clear the output image to black, so that the cartoon line drawings will be black (ie: not drawn).
+    memset((char*)result.data, 0, result.step * result.rows);
+
+    // Use the blurry cartoon image, except for the strong edges that we will leave black.
+    image.copyTo(result, mask);
+}
+
+Mat Cartoonifier::getEvil()
+{
+    // Convert from BGR color to Grayscale
+    Mat srcGray;
+    Mat srcColor = image.clone();
+    cvtColor(srcColor, srcGray, CV_BGR2GRAY);
+
+    // Remove the pixel noise with a good Median filter, before we start detecting edges.
+    medianBlur(srcGray, srcGray, 7);
+
+    Size size = image.size();
+    Mat mask = Mat(size, CV_8U);
+    Mat edges = Mat(size, CV_8U);
+    // Evil mode, making everything look like a scary bad guy.
+    // (Where "srcGray" is the original grayscale image plus a medianBlur of size 7x7).
+    Mat edges2;
+    Scharr(srcGray, edges, CV_8U, 1, 0);
+    Scharr(srcGray, edges2, CV_8U, 1, 0, -1);
+    edges += edges2;
+    threshold(edges, mask, 12, 255, THRESH_BINARY_INV);
+    medianBlur(mask, mask, 3);
+    return mask;
 }
