@@ -16,7 +16,6 @@ public:
     void resetResult();
     Mat getEvil();
     Mat getSketch();
-    void cartoonifyImage(bool sketchMode, bool alienMode, bool evilMode, int debugType);
     void paintingProcess();
     void alienProcess();
     void sketchProcess();

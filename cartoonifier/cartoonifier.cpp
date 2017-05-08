@@ -135,11 +135,11 @@ void Cartoonifier::paintingProcess()
 
     // Use the blurry cartoon image, except for the strong edges that we will leave black.
     image.copyTo(result, mask);
-    Mat pencil_bg = imread("img/canvas_bg2.jpg");
-    double alpha = 0.7;
-    double beta = 1 - alpha;
-    resize(pencil_bg, pencil_bg, result.size());
-    addWeighted(result, alpha, pencil_bg, beta, 0.0, result);
+//    Mat pencil_bg = imread("img/canvas_bg2.jpg");
+//    double alpha = 0.7;
+//    double beta = 1 - alpha;
+//    resize(pencil_bg, pencil_bg, result.size());
+//    addWeighted(result, alpha, pencil_bg, beta, 0.0, result);
 }
 
 void Cartoonifier::alienProcess()
