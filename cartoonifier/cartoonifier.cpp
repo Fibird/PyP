@@ -121,8 +121,8 @@ void Cartoonifier::paintingProcess()
     int repetitions = 7;        // Repetitions for strong cartoon effect.
     for (int i=0; i<repetitions; i++) {
         int size = 9;           // Filter size. Has a large effect on speed.
-        double sigmaColor = 75;  // Filter color strength.
-        double sigmaSpace = 75;  // Positional strength. Effects speed.
+        double sigmaColor = 15;  // Filter color strength.
+        double sigmaSpace = 7;  // Positional strength. Effects speed.
         bilateralFilter(smallImg, tmp, size, sigmaColor, sigmaSpace);
         bilateralFilter(tmp, smallImg, size, sigmaColor, sigmaSpace);
     }
