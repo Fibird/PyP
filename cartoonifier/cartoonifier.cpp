@@ -100,7 +100,7 @@ void Cartoonifier::cartoonifyImage(bool sketchMode, bool alienMode, bool evilMod
     memset((char*)result.data, 0, result.step * result.rows);
 
     // Use the blurry cartoon image, except for the strong edges that we will leave black.
-    image.copyTo(result, mask);
+    srcColor.copyTo(result, mask);
 }
 
 
@@ -345,7 +345,7 @@ void Cartoonifier::paintingProcess()
     memset((char*)result.data, 0, result.step * result.rows);
 
     // Use the blurry cartoon image, except for the strong edges that we will leave black.
-    image.copyTo(result, mask);
+    srcColor.copyTo(result, mask);
     Mat pencil_bg = imread("img/canvas_bg2.jpg");
     double alpha = 0.7;
     double beta = 1 - alpha;
@@ -429,7 +429,7 @@ void Cartoonifier::evilProcess()
     memset((char*)result.data, 0, result.step * result.rows);
 
     // Use the blurry cartoon image, except for the strong edges that we will leave black.
-    image.copyTo(result, mask);
+    srcColor.copyTo(result, mask);
 }
 
 Mat Cartoonifier::getEvil()
