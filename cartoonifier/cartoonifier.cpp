@@ -22,7 +22,7 @@ const Mat Cartoonifier::getInputMat() const
 
 // Apply an "alien" filter, when given a shrunken BGR image and the full-res edge mask.
 // Detects the color of the pixels in the middle of the image, then changes the color of that region to green.
-void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, Point *p)
+void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, Point *p, Scalar color)
 {
         int debugType = 1;
         // Convert to Y'CrCb color-space, since it is better for skin detection and color adjustment.
@@ -86,10 +86,7 @@ void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, Point *p
         // "mask" now just contains 1's in the skin pixels and 0's for non-skin pixels.
 
         // Change the color of the skin pixels in the given BGR image.
-        int Red = 0;
-        int Green = 0;
-        int Blue = 70;
-        add(smallImgBGR, Scalar(Blue, Green, Red), smallImgBGR, mask);
+        add(smallImgBGR, color, smallImgBGR, mask);
 }
 
 
@@ -210,7 +207,7 @@ void Cartoonifier::paintingProcess()
     srcColor.copyTo(result, mask);
 }
 
-void Cartoonifier::alienProcess()
+void Cartoonifier::alienProcess(int r, int g, int b)
 {
     Mat srcColor = image.clone();
     Size size = image.size();
@@ -253,7 +250,7 @@ void Cartoonifier::alienProcess()
     Mat edges = Mat(size, CV_8U);
     // Generate a nice edge mask, similar to a pencil line drawing.
     Laplacian(srcGray, edges, CV_8U, 5);
-    changeFacialSkinColor(smallImg, edges, p);
+    changeFacialSkinColor(smallImg, edges, p, Scalar(r, g, b));
 
     // Go back to the original scale.
     resize(smallImg, srcColor, size, 0,0, INTER_LINEAR);

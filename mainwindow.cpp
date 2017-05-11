@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include <QFileInfo>
 #include <QDebug>
+#include <QColorDialog>
 
 // OpenCV libray headers
 #include <opencv2/opencv.hpp>
@@ -148,7 +149,10 @@ void MainWindow::on_action_Alian_triggered()
     if (!cartoonifier.getInputMat().empty())
     {
         //cartoonifier.cartoonifyImage(false, true, false, false);
-        cartoonifier.alienProcess();
+        QColor color = QColorDialog::getColor(Qt::green, this, "Set face skin color");
+        if (!color.isValid())
+            color = Qt::green;
+        cartoonifier.alienProcess(color.blue(), color.green(), color.red());
         updateDisplay();
     }
     else

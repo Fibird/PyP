@@ -24,7 +24,7 @@ public:
     Mat getSketch();
     void cartoonifyImage(bool sketchMode, bool alienMode, bool evilMode, int debugType);
     void paintingProcess();
-    void alienProcess();
+    void alienProcess(int r, int g, int b);
     void sketchProcess();
     void evilProcess();
     ~Cartoonifier();
@@ -33,7 +33,7 @@ private:
     Mat result;
     ImageUtils imageUtils;
 private:
-    void changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, Point *p);
+    void changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, Point *p, Scalar color);
     void removePepperNoise(Mat &mask);
     void detectAndDraw(Mat& img, Mat &rst, CascadeClassifier& cascade,
         double scale, bool tryflip, Point *p);
