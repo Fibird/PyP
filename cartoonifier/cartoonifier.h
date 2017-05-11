@@ -3,7 +3,12 @@
 #include <iostream>
 #include <opencv2/highgui.hpp>
 #include "imageUtils/imageutils.h"
+#include "opencv2/objdetect.hpp"
+#include "opencv2/highgui.hpp"
 
+#include <iostream>
+
+using namespace std;
 using namespace cv;
 
 class Cartoonifier
@@ -30,8 +35,11 @@ private:
 private:
     // Draw an anti-aliased face outline, so the user knows where to put their face.
     void drawFaceStickFigure(Mat dst);
-    void changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debugType);
+    void changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, Point *p);
     void removePepperNoise(Mat &mask);
+    void detectAndDraw(Mat& img, Mat &rst, CascadeClassifier& cascade,
+        CascadeClassifier& nestedCascade,
+        double scale, bool tryflip, Point *p);
 };
 
 #endif // CARTOONIFIER_H

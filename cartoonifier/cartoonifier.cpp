@@ -86,11 +86,24 @@ void Cartoonifier::cartoonifyImage(bool sketchMode, bool alienMode, bool evilMod
         bilateralFilter(smallImg, tmp, size, sigmaColor, sigmaSpace);
         bilateralFilter(tmp, smallImg, size, sigmaColor, sigmaSpace);
     }
-
+    bool tryflip = false;
+    CascadeClassifier cascade, nestedCascade;
+    double scale = 1;
+    Point *p = new Point[3];
+    string cascadeName = "haarcascade_frontalface_alt.xml";
+    string nestedCascadeName = "haarcascade_eye.xml";
+    if (!nestedCascade.load(nestedCascadeName))
+        cerr << "WARNING: Could not load classifier cascade for nested objects" << endl;
+    if (!cascade.load(cascadeName))
+    {
+        cerr << "ERROR: Could not load classifier cascade" << endl;
+        //return -1;
+    }
     if (alienMode) {
         // Apply an "alien" filter, when given a shrunken image and the full-res edge mask.
         // Detects the color of the pixels in the middle of the image, then changes the color of that region to green.
-        changeFacialSkinColor(smallImg, edges, debugType);
+        //detectAndDraw(smallImg, cascade, nestedCascade, scale, tryflip, p);
+        changeFacialSkinColor(smallImg, edges, p);
     }
 
     // Go back to the original scale.
@@ -107,8 +120,9 @@ void Cartoonifier::cartoonifyImage(bool sketchMode, bool alienMode, bool evilMod
 
 // Apply an "alien" filter, when given a shrunken BGR image and the full-res edge mask.
 // Detects the color of the pixels in the middle of the image, then changes the color of that region to green.
-void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debugType)
+void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, Point *p)
 {
+        int debugType = 1;
         // Convert to Y'CrCb color-space, since it is better for skin detection and color adjustment.
         Mat yuv = Mat(smallImgBGR.size(), CV_8UC3);
         cvtColor(smallImgBGR, yuv, CV_BGR2YCrCb);
@@ -134,12 +148,15 @@ void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debu
         // Note that these values are dependent on the face outline, drawn in drawFaceStickFigure().
         int const NUM_SKIN_POINTS = 6;
         Point skinPts[NUM_SKIN_POINTS];
-        skinPts[0] = Point(sw/2,          sh/2 - sh/6);
-        skinPts[1] = Point(sw/2 - sw/11,  sh/2 - sh/6);
-        skinPts[2] = Point(sw/2 - sw/11,  sh/2 - sh/6);
-        skinPts[3] = Point(sw/2,          sh/2 - sh/6);
-        skinPts[4] = Point(sw/2 - sw/9,   sh/2 + sh/16);
-        skinPts[5] = Point(sw/2 + sw/9,   sh/2 + sh/16);
+        double delta_horiz = sw/11;
+        double delta_verti = sh / 6;
+
+        skinPts[0] = Point(p[0].x,          p[0].y - sh/6);
+        skinPts[1] = Point(p[0].x - sw/11,  p[0].y - sh/6);
+        skinPts[2] = Point(p[0].x + sw/11,  p[0].y - sh/6);
+        skinPts[3] = Point(p[0].x,          p[0].y + sh/16);
+        skinPts[4] = Point(p[0].x - sw/9,   p[0].y + sh/16);
+        skinPts[5] = Point(p[0].x + sw/9,   p[0].y + sh/16);
         // Skin might be fairly dark, or slightly less colorful.
         // Skin might be very bright, or slightly more colorful but not much more blue.
         const int LOWER_Y = 60;
@@ -156,11 +173,10 @@ void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debu
 
         for (int i=0; i<NUM_SKIN_POINTS; i++) {
             // Use the floodFill() mode that stores to an external mask, instead of the input image.
-            const int flags = 4 | FLOODFILL_FIXED_RANGE | FLOODFILL_MASK_ONLY;
+            const int flags = 4 | FLOODFILL_FIXED_RANGE | FLOODFILL_MASK_ONLY | (128 << 8);
             floodFill(yuv, maskPlusBorder, skinPts[i], Scalar(), NULL, lowerDiff, upperDiff, flags);
-            if (debugType >= 1)
-                circle(smallImgBGR, skinPts[i], 5, CV_RGB(0, 0, 255), 1, CV_AA);
         }
+
         if (debugType >= 2)
             imshow("flood mask", mask*120); // Draw the edges as white and the skin region as grey.
 
@@ -171,8 +187,8 @@ void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, int debu
 
         // Change the color of the skin pixels in the given BGR image.
         int Red = 0;
-        int Green = 70;
-        int Blue = 0;
+        int Green = 0;
+        int Blue = 70;
         add(smallImgBGR, Scalar(Blue, Green, Red), smallImgBGR, mask);
 }
 
@@ -346,17 +362,63 @@ void Cartoonifier::paintingProcess()
 
     // Use the blurry cartoon image, except for the strong edges that we will leave black.
     srcColor.copyTo(result, mask);
-    Mat pencil_bg = imread("img/canvas_bg2.jpg");
-    double alpha = 0.7;
-    double beta = 1 - alpha;
-    resize(pencil_bg, pencil_bg, result.size());
-    addWeighted(result, alpha, pencil_bg, beta, 0.0, result);
 }
 
 void Cartoonifier::alienProcess()
 {
-    paintingProcess();
-    result = 255 - result;
+    Mat srcColor = image.clone();
+    Size size = image.size();
+    Mat srcGray;
+    cvtColor(srcColor, srcGray, COLOR_BGR2GRAY);
+    Mat mask = getSketch();
+    // Do the bilateral filtering at a shrunken scale, since it
+    // runs so slowly but doesn't need full resolution for a good effect.
+    Size smallSize;
+    smallSize.width = size.width/2;
+    smallSize.height = size.height/2;
+    Mat smallImg = Mat(smallSize, CV_8UC3);
+    resize(srcColor, smallImg, smallSize, 0,0, INTER_LINEAR);
+
+    // Perform many iterations of weak bilateral filtering, to enhance the edges
+    // while blurring the flat regions, like a cartoon.
+    Mat tmp = Mat(smallSize, CV_8UC3);
+    int repetitions = 7;        // Repetitions for strong cartoon effect.
+    for (int i=0; i<repetitions; i++) {
+        int size = 9;           // Filter size. Has a large effect on speed.
+        double sigmaColor = 15;  // Filter color strength.
+        double sigmaSpace = 7;  // Positional strength. Effects speed.
+        bilateralFilter(smallImg, tmp, size, sigmaColor, sigmaSpace);
+        bilateralFilter(tmp, smallImg, size, sigmaColor, sigmaSpace);
+    }
+
+    bool tryflip = false;
+    CascadeClassifier cascade, nestedCascade;
+    double scale = 1;
+    Point *p = new Point[3];
+    string cascadeName = "haarcascade_frontalface_alt.xml";
+    string nestedCascadeName = "haarcascade_eye.xml";
+    if (!nestedCascade.load(nestedCascadeName))
+        cerr << "WARNING: Could not load classifier cascade for nested objects" << endl;
+    if (!cascade.load(cascadeName))
+    {
+        cerr << "ERROR: Could not load classifier cascade" << endl;
+        //return -1;
+    }
+
+    detectAndDraw(smallImg, tmp, cascade, nestedCascade, scale, tryflip, p);
+    Mat edges = Mat(size, CV_8U);
+    // Generate a nice edge mask, similar to a pencil line drawing.
+    Laplacian(srcGray, edges, CV_8U, 5);
+    changeFacialSkinColor(smallImg, edges, p);
+
+    // Go back to the original scale.
+    resize(smallImg, srcColor, size, 0,0, INTER_LINEAR);
+
+    // Clear the output image to black, so that the cartoon line drawings will be black (ie: not drawn).
+    memset((char*)result.data, 0, result.step * result.rows);
+
+    // Use the blurry cartoon image, except for the strong edges that we will leave black.
+    srcColor.copyTo(result, mask);
 }
 
 void Cartoonifier::sketchProcess()
@@ -455,3 +517,96 @@ Mat Cartoonifier::getEvil()
     medianBlur(mask, mask, 3);
     return mask;
 }
+
+void Cartoonifier::detectAndDraw(Mat &img, Mat &rst, CascadeClassifier &cascade, CascadeClassifier &nestedCascade, double scale, bool tryflip, Point *p)
+{
+    double t = 0;
+    vector<Rect> faces, faces2;
+    const static Scalar colors[] =
+    {
+        Scalar(255,0,0),
+        Scalar(255,128,0),
+        Scalar(255,255,0),
+        Scalar(0,255,0),
+        Scalar(0,128,255),
+        Scalar(0,255,255),
+        Scalar(0,0,255),
+        Scalar(255,0,255)
+    };
+    Mat gray, smallImg;
+
+    cvtColor(img, gray, COLOR_BGR2GRAY);
+    double fx = 1 / scale;
+    resize(gray, smallImg, Size(), fx, fx, INTER_LINEAR);
+    equalizeHist(smallImg, smallImg);
+
+    t = (double)cvGetTickCount();
+    cascade.detectMultiScale(smallImg, faces,
+        1.1, 2, 0
+        //|CASCADE_FIND_BIGGEST_OBJECT
+        //|CASCADE_DO_ROUGH_SEARCH
+        | CASCADE_SCALE_IMAGE,
+        Size(30, 30));
+    if (tryflip)
+    {
+        flip(smallImg, smallImg, 1);
+        cascade.detectMultiScale(smallImg, faces2,
+            1.1, 2, 0
+            //|CASCADE_FIND_BIGGEST_OBJECT
+            //|CASCADE_DO_ROUGH_SEARCH
+            | CASCADE_SCALE_IMAGE,
+            Size(30, 30));
+        for (vector<Rect>::const_iterator r = faces2.begin(); r != faces2.end(); r++)
+        {
+            faces.push_back(Rect(smallImg.cols - r->x - r->width, r->y, r->width, r->height));
+        }
+    }
+    t = (double)cvGetTickCount() - t;
+    printf("detection time = %g ms\n", t / ((double)cvGetTickFrequency()*1000.));
+    for (size_t i = 0; i < faces.size(); i++)
+    {
+        Rect r = faces[i];
+        Mat smallImgROI;
+        vector<Rect> nestedObjects;
+        Point center;
+        Scalar color = colors[i % 8];
+        int radius;
+
+        double aspect_ratio = (double)r.width / r.height;
+        if (0.75 < aspect_ratio && aspect_ratio < 1.3)
+        {
+            center.x = cvRound((r.x + r.width*0.5)*scale);
+            center.y = cvRound((r.y + r.height*0.5)*scale);
+            radius = cvRound((r.width + r.height)*0.25*scale);
+            //circle(img, center, radius, color, 3, 8, 0);
+            //cout << "face:" << center.x << "," << center.y << endl;
+            p[0].x = center.x; p[0].y = center.y;
+        }
+        else
+            rectangle(img, cvPoint(cvRound(r.x*scale), cvRound(r.y*scale)),
+                cvPoint(cvRound((r.x + r.width - 1)*scale), cvRound((r.y + r.height - 1)*scale)),
+                color, 3, 8, 0);
+        if (nestedCascade.empty())
+            continue;
+        smallImgROI = smallImg(r);
+        nestedCascade.detectMultiScale(smallImgROI, nestedObjects,
+            1.1, 2, 0
+            //|CASCADE_FIND_BIGGEST_OBJECT
+            //|CASCADE_DO_ROUGH_SEARCH
+            //|CASCADE_DO_CANNY_PRUNING
+            | CASCADE_SCALE_IMAGE,
+            Size(30, 30));
+        for (size_t j = 0; j < nestedObjects.size(); j++)
+        {
+            Rect nr = nestedObjects[j];
+            center.x = cvRound((r.x + nr.x + nr.width*0.5)*scale);
+            center.y = cvRound((r.y + nr.y + nr.height*0.5)*scale);
+            radius = cvRound((nr.width + nr.height)*0.25*scale);
+            //circle(img, center, radius, color, 3, 8, 0);
+            //cout << "eye" << j << ":" << center.x << "," << center.y << endl;
+            p[j + 1].x = center.x; p[j + 1].y = center.y;
+        }
+    }
+    rst = img;
+}
+
