@@ -380,8 +380,9 @@ void Cartoonifier::detectAndDraw(Mat &img, Mat &rst, CascadeClassifier &cascade,
     Mat gray, smallImg;
 
     cvtColor(img, gray, COLOR_BGR2GRAY);
-    double fx = 1 / scale;
-    resize(gray, smallImg, Size(), fx, fx, INTER_LINEAR);
+    //double fx = 1 / scale;
+    //resize(gray, smallImg, Size(), fx, fx, INTER_LINEAR);
+    smallImg = gray;
     equalizeHist(smallImg, smallImg);
 
     t = (double)cvGetTickCount();
