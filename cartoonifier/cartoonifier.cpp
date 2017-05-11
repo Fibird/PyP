@@ -20,104 +20,6 @@ const Mat Cartoonifier::getInputMat() const
     return image;
 }
 
-// Convert the given photo into a cartoon-like or painting-like image.
-// Set sketchMode to true if you want a line drawing instead of a painting.
-// Set alienMode to true if you want alien skin instead of human.
-// Set evilMode to true if you want an "evil" character instead of a "good" character.
-// Set debugType to 1 to show where skin color is taken from, and 2 to show the skin mask in a new window (for desktop).
-void Cartoonifier::cartoonifyImage(bool sketchMode, bool alienMode, bool evilMode, int debugType)
-{
-    // Convert from BGR color to Grayscale
-    Mat srcGray;
-    Mat srcColor = image.clone();
-    cvtColor(srcColor, srcGray, CV_BGR2GRAY);
-
-    // Remove the pixel noise with a good Median filter, before we start detecting edges.
-    medianBlur(srcGray, srcGray, 7);
-
-    Size size = image.size();
-    Mat mask = Mat(size, CV_8U);
-    Mat edges = Mat(size, CV_8U);
-
-    if (!evilMode) {
-        // Generate a nice edge mask, similar to a pencil line drawing.
-        Laplacian(srcGray, edges, CV_8U, 5);
-        threshold(edges, mask, 80, 255, THRESH_BINARY_INV);
-        // Mobile cameras usually have lots of noise, so remove small
-        // dots of black noise from the black & white edge mask.
-        removePepperNoise(mask);
-    }
-    else {
-        // Evil mode, making everything look like a scary bad guy.
-        // (Where "srcGray" is the original grayscale image plus a medianBlur of size 7x7).
-        Mat edges2;
-        Scharr(srcGray, edges, CV_8U, 1, 0);
-        Scharr(srcGray, edges2, CV_8U, 1, 0, -1);
-        edges += edges2;
-        threshold(edges, mask, 12, 255, THRESH_BINARY_INV);
-        medianBlur(mask, mask, 3);
-    }
-    //imshow("edges", edges);
-    //imshow("mask", mask);
-
-    // For sketch mode, we just need the mask!
-    if (sketchMode) {
-        // The output image has 3 channels, not a single channel.
-        cvtColor(mask, result, CV_GRAY2BGR);
-        return;
-    }
-
-    // Do the bilateral filtering at a shrunken scale, since it
-    // runs so slowly but doesn't need full resolution for a good effect.
-    Size smallSize;
-    smallSize.width = size.width/2;
-    smallSize.height = size.height/2;
-    Mat smallImg = Mat(smallSize, CV_8UC3);
-    resize(srcColor, smallImg, smallSize, 0,0, INTER_LINEAR);
-
-    // Perform many iterations of weak bilateral filtering, to enhance the edges
-    // while blurring the flat regions, like a cartoon.
-    Mat tmp = Mat(smallSize, CV_8UC3);
-    int repetitions = 7;        // Repetitions for strong cartoon effect.
-    for (int i=0; i<repetitions; i++) {
-        int size = 9;           // Filter size. Has a large effect on speed.
-        double sigmaColor = 9;  // Filter color strength.
-        double sigmaSpace = 7;  // Positional strength. Effects speed.
-        bilateralFilter(smallImg, tmp, size, sigmaColor, sigmaSpace);
-        bilateralFilter(tmp, smallImg, size, sigmaColor, sigmaSpace);
-    }
-    bool tryflip = false;
-    CascadeClassifier cascade, nestedCascade;
-    double scale = 1;
-    Point *p = new Point[3];
-    string cascadeName = "haarcascade_frontalface_alt.xml";
-    string nestedCascadeName = "haarcascade_eye.xml";
-    if (!nestedCascade.load(nestedCascadeName))
-        cerr << "WARNING: Could not load classifier cascade for nested objects" << endl;
-    if (!cascade.load(cascadeName))
-    {
-        cerr << "ERROR: Could not load classifier cascade" << endl;
-        //return -1;
-    }
-    if (alienMode) {
-        // Apply an "alien" filter, when given a shrunken image and the full-res edge mask.
-        // Detects the color of the pixels in the middle of the image, then changes the color of that region to green.
-        //detectAndDraw(smallImg, cascade, nestedCascade, scale, tryflip, p);
-        changeFacialSkinColor(smallImg, edges, p);
-    }
-
-    // Go back to the original scale.
-    resize(smallImg, srcColor, size, 0,0, INTER_LINEAR);
-
-    // Clear the output image to black, so that the cartoon line drawings will be black (ie: not drawn).
-    memset((char*)result.data, 0, result.step * result.rows);
-
-    // Use the blurry cartoon image, except for the strong edges that we will leave black.
-    srcColor.copyTo(result, mask);
-}
-
-
-
 // Apply an "alien" filter, when given a shrunken BGR image and the full-res edge mask.
 // Detects the color of the pixels in the middle of the image, then changes the color of that region to green.
 void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, Point *p)
@@ -148,8 +50,6 @@ void Cartoonifier::changeFacialSkinColor(Mat smallImgBGR, Mat bigEdges, Point *p
         // Note that these values are dependent on the face outline, drawn in drawFaceStickFigure().
         int const NUM_SKIN_POINTS = 6;
         Point skinPts[NUM_SKIN_POINTS];
-        double delta_horiz = sw/11;
-        double delta_verti = sh / 6;
 
         skinPts[0] = Point(p[0].x,          p[0].y - sh/6);
         skinPts[1] = Point(p[0].x - sw/11,  p[0].y - sh/6);
@@ -254,60 +154,6 @@ void Cartoonifier::removePepperNoise(Mat &mask)
     }
 }
 
-
-// Draw an anti-aliased face outline, so the user knows where to put their face.
-// Note that the skin detector for "alien" mode uses points around the face based on the face
-// dimensions shown by this function.
-void Cartoonifier::drawFaceStickFigure(Mat dst)
-{
-    Size size = dst.size();
-    int sw = size.width;
-    int sh = size.height;
-
-    // Draw the face onto a color image with black background.
-    Mat faceOutline = Mat::zeros(size, CV_8UC3);
-    Scalar color = CV_RGB(255,255,0);   // Yellow
-    int thickness = 4;
-    // Use 70% of the screen height as the face height.
-    int faceH = sh/2 * 70/100;  // "faceH" is actually half the face height (ie: radius of the ellipse).
-    // Scale the width to be the same nice shape for any screen width (based on screen height).
-    int faceW = faceH * 72/100; // Use a face with an aspect ratio of 0.72
-    // Draw the face outline.
-    ellipse(faceOutline, Point(sw/2, sh/2), Size(faceW, faceH), 0, 0, 360, color, thickness, CV_AA);
-    // Draw the eye outlines, as 2 half ellipses.
-    int eyeW = faceW * 23/100;
-    int eyeH = faceH * 11/100;
-    int eyeX = faceW * 48/100;
-    int eyeY = faceH * 13/100;
-    // Set the angle and shift for the eye half ellipses.
-    int eyeA = 15; // angle in degrees.
-    int eyeYshift = 11;
-    // Draw the top of the right eye.
-    ellipse(faceOutline, Point(sw/2 - eyeX, sh/2 - eyeY), Size(eyeW, eyeH), 0, 180+eyeA, 360-eyeA, color, thickness, CV_AA);
-    // Draw the bottom of the right eye.
-    ellipse(faceOutline, Point(sw/2 - eyeX, sh/2 - eyeY - eyeYshift), Size(eyeW, eyeH), 0, 0+eyeA, 180-eyeA, color, thickness, CV_AA);
-    // Draw the top of the left eye.
-    ellipse(faceOutline, Point(sw/2 + eyeX, sh/2 - eyeY), Size(eyeW, eyeH), 0, 180+eyeA, 360-eyeA, color, thickness, CV_AA);
-    // Draw the bottom of the left eye.
-    ellipse(faceOutline, Point(sw/2 + eyeX, sh/2 - eyeY - eyeYshift), Size(eyeW, eyeH), 0, 0+eyeA, 180-eyeA, color, thickness, CV_AA);
-
-    // Draw the bottom lip of the mouth.
-    int mouthY = faceH * 53/100;
-    int mouthW = faceW * 45/100;
-    int mouthH = faceH * 6/100;
-    ellipse(faceOutline, Point(sw/2, sh/2 + mouthY), Size(mouthW, mouthH), 0, 0, 180, color, thickness, CV_AA);
-
-    // Draw anti-aliased text.
-    int fontFace = FONT_HERSHEY_COMPLEX;
-    float fontScale = 1.0f;
-    int fontThickness = 2;
-    putText(faceOutline, "Put your face here", Point(sw * 23/100, sh * 10/100), fontFace, fontScale, color, fontThickness, CV_AA);
-    //imshow("faceOutline", faceOutline);
-
-    // Overlay the outline with alpha blending.
-    addWeighted(dst, 1.0, faceOutline, 0.7, 0, dst, CV_8UC3);
-}
-
 const Mat Cartoonifier::getLastResult() const
 {
     return result;
@@ -392,20 +238,18 @@ void Cartoonifier::alienProcess()
     }
 
     bool tryflip = false;
-    CascadeClassifier cascade, nestedCascade;
+    CascadeClassifier cascade;
     double scale = 1;
     Point *p = new Point[3];
     string cascadeName = "haarcascade_frontalface_alt.xml";
-    string nestedCascadeName = "haarcascade_eye.xml";
-    if (!nestedCascade.load(nestedCascadeName))
-        cerr << "WARNING: Could not load classifier cascade for nested objects" << endl;
+
     if (!cascade.load(cascadeName))
     {
         cerr << "ERROR: Could not load classifier cascade" << endl;
         //return -1;
     }
 
-    detectAndDraw(smallImg, tmp, cascade, nestedCascade, scale, tryflip, p);
+    detectAndDraw(smallImg, tmp, cascade, scale, tryflip, p);
     Mat edges = Mat(size, CV_8U);
     // Generate a nice edge mask, similar to a pencil line drawing.
     Laplacian(srcGray, edges, CV_8U, 5);
@@ -518,7 +362,7 @@ Mat Cartoonifier::getEvil()
     return mask;
 }
 
-void Cartoonifier::detectAndDraw(Mat &img, Mat &rst, CascadeClassifier &cascade, CascadeClassifier &nestedCascade, double scale, bool tryflip, Point *p)
+void Cartoonifier::detectAndDraw(Mat &img, Mat &rst, CascadeClassifier &cascade, double scale, bool tryflip, Point *p)
 {
     double t = 0;
     vector<Rect> faces, faces2;
@@ -566,8 +410,8 @@ void Cartoonifier::detectAndDraw(Mat &img, Mat &rst, CascadeClassifier &cascade,
     for (size_t i = 0; i < faces.size(); i++)
     {
         Rect r = faces[i];
-        Mat smallImgROI;
-        vector<Rect> nestedObjects;
+        //Mat smallImgROI;
+        //vector<Rect> nestedObjects;
         Point center;
         Scalar color = colors[i % 8];
         int radius;
@@ -586,26 +430,6 @@ void Cartoonifier::detectAndDraw(Mat &img, Mat &rst, CascadeClassifier &cascade,
             rectangle(img, cvPoint(cvRound(r.x*scale), cvRound(r.y*scale)),
                 cvPoint(cvRound((r.x + r.width - 1)*scale), cvRound((r.y + r.height - 1)*scale)),
                 color, 3, 8, 0);
-        if (nestedCascade.empty())
-            continue;
-        smallImgROI = smallImg(r);
-        nestedCascade.detectMultiScale(smallImgROI, nestedObjects,
-            1.1, 2, 0
-            //|CASCADE_FIND_BIGGEST_OBJECT
-            //|CASCADE_DO_ROUGH_SEARCH
-            //|CASCADE_DO_CANNY_PRUNING
-            | CASCADE_SCALE_IMAGE,
-            Size(30, 30));
-        for (size_t j = 0; j < nestedObjects.size(); j++)
-        {
-            Rect nr = nestedObjects[j];
-            center.x = cvRound((r.x + nr.x + nr.width*0.5)*scale);
-            center.y = cvRound((r.y + nr.y + nr.height*0.5)*scale);
-            radius = cvRound((nr.width + nr.height)*0.25*scale);
-            //circle(img, center, radius, color, 3, 8, 0);
-            //cout << "eye" << j << ":" << center.x << "," << center.y << endl;
-            p[j + 1].x = center.x; p[j + 1].y = center.y;
-        }
     }
     rst = img;
 }
