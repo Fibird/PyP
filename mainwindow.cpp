@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     cartoonifier()
 {
     ui->setupUi(this);
+    fileInfo = QFileInfo();
 }
 
 MainWindow::~MainWindow()
@@ -32,8 +33,7 @@ void MainWindow::on_action_Open_triggered()
 {
     QString fileFullPath = QFileDialog::getOpenFileName(this, tr("Open Image"),
                                                     ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
-    QFileInfo imageInfo(fileFullPath);
-    fileName = imageInfo.fileName();
+    this->fileInfo = QFileInfo(fileFullPath);
 
     if (!fileFullPath.isEmpty())
     {
@@ -80,14 +80,7 @@ void MainWindow::on_action_Save_triggered()
     }
     else
     {
-        QString imagePath = QFileDialog::getSaveFileName(this,
-                                                         tr("Save File"),
-                                                         fileName,
-                                                         tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
-        if (!imagePath.isEmpty())
-        {
-            cv::imwrite(imagePath.toStdString(), savedImage);
-        }
+        cv::imwrite(fileInfo.filePath().toStdString(), savedImage);
     }
 }
 

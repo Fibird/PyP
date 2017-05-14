@@ -7,6 +7,8 @@
 #include <QGraphicsScene>
 #include "cartoonifier/cartoonifier.h"
 #include <QWheelEvent>
+#include <QFileInfo>
+
 namespace Ui {
 class MainWindow;
 }
@@ -46,7 +48,7 @@ private:
     QGraphicsScene *scene;
     cv::Mat savedImage;
     Cartoonifier cartoonifier;
-    QString fileName;
+    QFileInfo fileInfo;
     void updateDisplay();
 private:
     void displayMat(cv::Mat displayedImage);
