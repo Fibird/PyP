@@ -94,7 +94,6 @@ void MainWindow::on_action_Painting_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        //cartoonifier.cartoonifyImage(false, false, false, false);
         cartoonifier.paintingProcess();
         updateDisplay();
     }
@@ -113,7 +112,6 @@ void MainWindow::on_action_Sketch_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        //cartoonifier.cartoonifyImage(true, false, false, false);
         cartoonifier.sketchProcess();
         updateDisplay();
     }
@@ -127,7 +125,6 @@ void MainWindow::on_action_Evil_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        //cartoonifier.cartoonifyImage(false, false, true, false);
         cartoonifier.evilProcess();
         updateDisplay();
     }
@@ -141,7 +138,6 @@ void MainWindow::on_action_Alian_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        //cartoonifier.cartoonifyImage(false, true, false, false);
         QColor color = QColorDialog::getColor(Qt::green, this, "Set face skin color");
         if (!color.isValid())
             color = Qt::green;
@@ -156,7 +152,6 @@ void MainWindow::on_action_Alian_triggered()
 
 void MainWindow::on_action_undo_triggered()
 {
-    //cartoonifier.setInputImage(loadedImage);
     cartoonifier.resetResult();
     updateDisplay();
 }

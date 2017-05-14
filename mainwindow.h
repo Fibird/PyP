@@ -49,9 +49,9 @@ private:
     cv::Mat savedImage;
     Cartoonifier cartoonifier;
     QFileInfo fileInfo;
-    void updateDisplay();
 private:
     void displayMat(cv::Mat displayedImage);
+    void updateDisplay();
 };
 
 #endif // MAINWINDOW_H
