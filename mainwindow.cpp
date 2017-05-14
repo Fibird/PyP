@@ -138,11 +138,6 @@ void MainWindow::on_action_Alian_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        QColor color = QColorDialog::getColor(Qt::green, this, "Set face skin color");
-        if (!color.isValid())
-            color = Qt::green;
-        cartoonifier.alienProcess(color.blue(), color.green(), color.red());
-        updateDisplay();
     }
     else
     {

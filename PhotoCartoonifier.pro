@@ -25,12 +25,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    cartoonifier/cartoonifier.cpp \
-    imageUtils/imageutils.cpp
+    cartoonifier/cartoonifier.cpp
 
 HEADERS  += mainwindow.h \
-    cartoonifier/cartoonifier.h \
-    imageUtils/imageutils.h
+    cartoonifier/cartoonifier.h
 
 FORMS    += mainwindow.ui
 
