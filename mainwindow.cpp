@@ -134,17 +134,6 @@ void MainWindow::on_action_Evil_triggered()
     }
 }
 
-void MainWindow::on_action_Alian_triggered()
-{
-    if (!cartoonifier.getInputMat().empty())
-    {
-    }
-    else
-    {
-        QMessageBox::information(this, "No Image", "There is no image to be processed!");
-    }
-}
-
 void MainWindow::on_action_undo_triggered()
 {
     cartoonifier.resetResult();

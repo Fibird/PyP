@@ -60,7 +60,6 @@
     <addaction name="action_Painting"/>
     <addaction name="action_Sketch"/>
     <addaction name="action_Evil"/>
-    <addaction name="action_Alian"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menu_Cartoonifier"/>
@@ -94,7 +93,6 @@
    <addaction name="action_Painting"/>
    <addaction name="action_Evil"/>
    <addaction name="action_Sketch"/>
-   <addaction name="action_Alian"/>
   </widget>
   <action name="action_Open">
    <property name="icon">
@@ -211,15 +209,6 @@
    </property>
    <property name="statusTip">
     <string>make image like an evil</string>
-   </property>
-  </action>
-  <action name="action_Alian">
-   <property name="icon">
-    <iconset resource="cpresources.qrc">
-     <normaloff>:/menu_icon/alien-proc</normaloff>:/menu_icon/alien-proc</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;Alien</string>
    </property>
   </action>
   <action name="action_undo">

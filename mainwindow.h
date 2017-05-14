@@ -34,8 +34,6 @@ private slots:
 
     void on_action_Evil_triggered();
 
-    void on_action_Alian_triggered();
-
     void on_action_undo_triggered();
 
     void on_actionSave_as_triggered();
