@@ -34,12 +34,13 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
-win32:CONFIG(release, debug|release): LIBS += -LD:/opencv3.0/opencv/build/x64/vc14/lib/ -lopencv_world310
-else:win32:CONFIG(debug, debug|release): LIBS += -LD:/opencv3.0/opencv/build/x64/vc14/lib/ -lopencv_world310d
-else:unix: LIBS += -LD:/opencv3.0/opencv/build/x64/vc14/lib/ -lopencv_world310
+# OpenCV library
+INCLUDEPATH += $$(OPENCV_DIR)/include
+win32:CONFIG(release, debug|release): LIBS += -L$$(OPENCV_DIR)/x64/vc14/lib/ -lopencv_world310
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$(OPENCV_DIR)/x64/vc14/lib/ -lopencv_world310d
+else:unix: LIBS += -L$$(OPENCV_DIR)/x64/vc14/lib/ -lopencv_world310
 
-INCLUDEPATH += D:/opencv3.0/opencv/build/include
-DEPENDPATH += D:/opencv3.0/opencv/build/include
+message(Path of your OpenCV is $$(OPENCV_DIR) and please check the validation of it!)
 
 RESOURCES += \
     cpresources.qrc
