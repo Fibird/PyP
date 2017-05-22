@@ -27,7 +27,8 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     cartoonifier/cartoonifier.cpp \
     sketchizecmd.cpp \
-    commands/commands.cpp
+    commands/commands.cpp \
+    cartoonifier/sketchize.cpp
 
 HEADERS  += mainwindow.h \
     cartoonifier/cartoonifier.h \
