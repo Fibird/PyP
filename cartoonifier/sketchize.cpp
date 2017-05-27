@@ -1,5 +1,5 @@
 #include "sketchize.h"
-#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/imgproc.hpp>
 
 using namespace cv;
 
@@ -39,6 +39,7 @@ Mat Sketchize::process(const Mat &image)
     threshold(edges, result, 80, 255, THRESH_BINARY_INV);
     // remove pepper noise from this black-white image
     removePepperNoise(result);
+    return result;
 }
 
 // Remove black dots (upto 4x4 in size) of noise from a pure black & white image.

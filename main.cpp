@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include "cartoonifier/sketchize.h"
+#include "cartoonifier/paintize.h"
 
 int main(int argc, char *argv[])
 {

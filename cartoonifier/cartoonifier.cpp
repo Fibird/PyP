@@ -136,7 +136,7 @@ void Cartoonifier::paintingProcess()
     // Use the blurry cartoon image, except for the strong edges that we will leave black.
     srcColor.copyTo(result, mask);
 }
-
+#include "cartoonifier/sketchize.h"
 void Cartoonifier::sketchProcess()
 {
     // For sketch mode, we just need the mask!

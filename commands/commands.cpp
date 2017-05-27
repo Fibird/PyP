@@ -1,4 +1,4 @@
-#include "commands.h"
+#include "commands/commands.h"
 
 SketchizeCMD::SketchizeCMD()
 {
