@@ -28,12 +28,14 @@ SOURCES += main.cpp\
     cartoonifier/cartoonifier.cpp \
     sketchizecmd.cpp \
     commands/commands.cpp \
-    cartoonifier/sketchize.cpp
+    cartoonifier/sketchize.cpp \
+    cartoonifier/paintize.cpp
 
 HEADERS  += mainwindow.h \
     cartoonifier/cartoonifier.h \
     cartoonifier/sketchize.h \
-    commands/commands.h
+    commands/commands.h \
+    cartoonifier/paintize.h
 
 FORMS    += mainwindow.ui
 
