@@ -9,8 +9,8 @@ private:
     cv::Mat result;
 public:
     Sketchize();
-    inline void setStrokeWidth(int w);
-    inline int getStrokeWidth() const;
+    void setStrokeWidth(int w);
+    int getStrokeWidth() const;
     cv::Mat process(const cv::Mat &image);
 private:
     // remove black dots (upto 4x4 in size) of noise from a pure black & white image.

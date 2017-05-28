@@ -9,14 +9,14 @@ Sketchize::Sketchize()
 }
 
 // set width of stroke
-inline void Sketchize::setStrokeWidth(int w)
+void Sketchize::setStrokeWidth(int w)
 {
     if (w < 1) w = 1;
     if (w > 5) w = 5;
     this->strokeWidth = w;
 }
 
-inline int Sketchize::getStrokeWidth() const
+int Sketchize::getStrokeWidth() const
 {
     return strokeWidth;
 }
