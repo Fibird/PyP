@@ -2,6 +2,8 @@
 
 # Overview
 
+![logo](https://github.com/Sunlcy/PyP/blob/master/logo/pyp_logo.png)
+
 PyP /paip/ is a tiny photo editor. The name "PyP" is a acronym for "Paint your Photos". Just like its name goes, you can "paint" your photos by this software.
 
 # Features
@@ -25,5 +27,3 @@ Developing...
 ## Avatars making
 
 Developing...
-
-
