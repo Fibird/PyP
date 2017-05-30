@@ -1,22 +1,26 @@
 #include "commands/commands.h"
+#include <QDebug>
 
 /*************** sketchize command ***************/
-SketchizeCMD::SketchizeCMD(cv::Mat &image, int strokeWidth, QUndoCommand *parent)
-    : QUndoCommand(parent)
+SketchizeCMD::SketchizeCMD(cv::Mat &image, int strokeWidth, QObject *objParent, QUndoCommand *undoParent)
+    : QObject(objParent),
+      QUndoCommand(undoParent)
 {
     oldImg = image.clone();
-    newImg = image;
     skc.setStrokeWidth(strokeWidth);
 }
 
 void SketchizeCMD::undo()
 {
     newImg = oldImg.clone();
+    emit transpImg(newImg);
 }
 
 void SketchizeCMD::redo()
 {
     newImg = skc.process(oldImg);
+    //newImg.setTo(0);
+    emit transpImg(newImg);
 }
 
 /*************** cartoonize command ***************/

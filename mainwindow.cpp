@@ -65,11 +65,12 @@ void MainWindow::on_action_Open_triggered()
         loadedImage = cv::imread(fileFullPath.toUtf8().toStdString());
 
         cartoonifier.setInputImage(fileFullPath.toStdString());
-        displayMat(cartoonifier.getInputMat());
+        cv::Mat t = cartoonifier.getInputMat();
+        displayMat(t);
     }
 }
 
-void MainWindow::displayMat(cv::Mat displayedImage)
+void MainWindow::displayMat(cv::Mat &displayedImage)
 {
     QImage transfromedImg;
     cv::Mat tempRgb;
@@ -94,6 +95,13 @@ void MainWindow::displayMat(cv::Mat displayedImage)
     scene->addPixmap(showedPixImg);
     scene->setSceneRect(showedPixImg.rect());
     ui->ImageGraphicsView->setScene(scene);
+}
+
+void MainWindow::Test(const Mat displayedImage)
+{
+    qDebug() << "test in mainwindow";
+    imshow("tImg", displayedImage);
+    waitKey(0);
 }
 
 void MainWindow::on_action_Save_triggered()
@@ -129,7 +137,7 @@ void MainWindow::on_action_Painting_triggered()
 
 void MainWindow::updateDisplay()
 {
-    displayMat(cartoonifier.getLastResult());
+    //displayMat(cartoonifier.getLastResult());
 }
 
 void MainWindow::on_action_Sketch_triggered()
@@ -137,9 +145,12 @@ void MainWindow::on_action_Sketch_triggered()
     if (!cartoonifier.getInputMat().empty())
     {
         //cartoonifier.sketchProcess();
-        undoStack->push(new SketchizeCMD(loadedImage));
+        SketchizeCMD *skcCmd = new SketchizeCMD(loadedImage);
+        connect(skcCmd, &SketchizeCMD::transpImg, this, &MainWindow::Test);
+        undoStack->push(skcCmd);
         //updateDisplay();
-        displayMat(loadedImage);
+
+        //displayMat(loadedImage);
     }
     else
     {

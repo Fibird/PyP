@@ -53,10 +53,11 @@ private:
     QAction *undoAction;
     QAction *redoAction;
 private:
-    void displayMat(cv::Mat displayedImage);
+    void displayMat(Mat &displayedImage);
     void updateDisplay();
     void createActions();
     void createMenus();
+    void Test(const cv::Mat displayedImage);
 };
 
 #endif // MAINWINDOW_H

@@ -5,17 +5,21 @@
 #include <cartoonifier/sketchize.h>
 #include <cartoonifier/paintize.h>
 #include <cartoonifier/evilize.h>
+#include <QObject>
 
-class SketchizeCMD : public QUndoCommand
+class SketchizeCMD : public QObject, public QUndoCommand
 {
+    Q_OBJECT
 private:
     cv::Mat oldImg;
     cv::Mat newImg;
     Sketchize skc;
 public:
-    SketchizeCMD(cv::Mat &image, int strokeWidth = 3, QUndoCommand *parent = 0);
+    SketchizeCMD(cv::Mat &image, int strokeWidth = 3, QObject *objParent = 0, QUndoCommand *undoParent = 0);
     void undo() override;
     void redo() override;
+signals:
+    void transpImg(cv::Mat &img);
 };
 
 class CartoonizeCMD : public QUndoCommand
