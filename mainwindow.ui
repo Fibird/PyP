@@ -222,9 +222,6 @@
    <property name="statusTip">
     <string>undo changes</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+Z</string>
-   </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

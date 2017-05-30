@@ -57,7 +57,6 @@ private:
     void updateDisplay();
     void createActions();
     void createMenus();
-    void Test(const cv::Mat displayedImage);
 };
 
 #endif // MAINWINDOW_H

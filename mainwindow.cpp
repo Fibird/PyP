@@ -85,23 +85,16 @@ void MainWindow::displayMat(cv::Mat &displayedImage)
     }
     else
     {
-        transfromedImg = QImage((const unsigned char*)(tempRgb.data),
-                    tempRgb.cols, tempRgb.rows,
-                    tempRgb.cols * tempRgb.channels(),
-                    QImage::Format_RGB888);
+        transfromedImg = QImage((const unsigned char*)(displayedImage.data),
+                    displayedImage.cols, displayedImage.rows,
+                    displayedImage.cols * displayedImage.channels(),
+                    QImage::Format_Indexed8);
     }
     scene = new QGraphicsScene(this);
     QPixmap showedPixImg = QPixmap::fromImage(transfromedImg);
     scene->addPixmap(showedPixImg);
     scene->setSceneRect(showedPixImg.rect());
     ui->ImageGraphicsView->setScene(scene);
-}
-
-void MainWindow::Test(const Mat displayedImage)
-{
-    qDebug() << "test in mainwindow";
-    imshow("tImg", displayedImage);
-    waitKey(0);
 }
 
 void MainWindow::on_action_Save_triggered()
@@ -146,7 +139,7 @@ void MainWindow::on_action_Sketch_triggered()
     {
         //cartoonifier.sketchProcess();
         SketchizeCMD *skcCmd = new SketchizeCMD(loadedImage);
-        connect(skcCmd, &SketchizeCMD::transpImg, this, &MainWindow::Test);
+        connect(skcCmd, &SketchizeCMD::transpImg, this, &MainWindow::displayMat);
         undoStack->push(skcCmd);
         //updateDisplay();
 
