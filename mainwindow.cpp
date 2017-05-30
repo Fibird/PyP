@@ -8,6 +8,9 @@
 #include <QFileInfo>
 #include <QDebug>
 #include <QColorDialog>
+#include <QKeySequence>
+#include <QIcon>
+#include <commands/commands.h>
 
 // OpenCV libray headers
 #include <opencv2/opencv.hpp>
@@ -23,6 +26,27 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     fileInfo = QFileInfo();
+    undoStack = new QUndoStack(this);
+    createActions();
+    createMenus();
+}
+
+void MainWindow::createActions()
+{
+    // undo and redo actions
+    undoAction = undoStack->createUndoAction(this, tr("&Undo"));
+    undoAction->setShortcut(QKeySequence::Undo);
+    undoAction->setIcon(QIcon(tr(":/menu_icon/undo-icon")));
+
+    redoAction = undoStack->createRedoAction(this, tr("&Redo"));
+    redoAction->setShortcut(QKeySequence::Redo);
+    redoAction->setIcon(QIcon(tr(":/menu_icon/redo-icon")));
+}
+
+void MainWindow::createMenus()
+{
+    ui->mainToolBar->addAction(undoAction);
+    ui->mainToolBar->addAction(redoAction);
 }
 
 MainWindow::~MainWindow()
@@ -112,8 +136,10 @@ void MainWindow::on_action_Sketch_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        cartoonifier.sketchProcess();
-        updateDisplay();
+        //cartoonifier.sketchProcess();
+        undoStack->push(new SketchizeCMD(loadedImage));
+        //updateDisplay();
+        displayMat(loadedImage);
     }
     else
     {

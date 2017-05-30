@@ -8,6 +8,8 @@
 #include "cartoonifier/cartoonifier.h"
 #include <QWheelEvent>
 #include <QFileInfo>
+#include <QUndoCommand>
+#include <QUndoStack>
 
 namespace Ui {
 class MainWindow;
@@ -47,9 +49,14 @@ private:
     cv::Mat savedImage;
     Cartoonifier cartoonifier;
     QFileInfo fileInfo;
+    QUndoStack *undoStack;
+    QAction *undoAction;
+    QAction *redoAction;
 private:
     void displayMat(cv::Mat displayedImage);
     void updateDisplay();
+    void createActions();
+    void createMenus();
 };
 
 #endif // MAINWINDOW_H
