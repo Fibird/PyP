@@ -19,23 +19,23 @@ void SketchizeCMD::undo()
 void SketchizeCMD::redo()
 {
     newImg = skc.process(oldImg);
-    //newImg.setTo(0);
     emit transpImg(newImg);
 }
 
 /*************** cartoonize command ***************/
 
-CartoonizeCMD::CartoonizeCMD(cv::Mat &image, QUndoCommand * parent)
-    : QUndoCommand(parent)
+CartoonizeCMD::CartoonizeCMD(cv::Mat &image, QObject *objParent, QUndoCommand * undoParent)
+    : QObject(objParent),
+      QUndoCommand(undoParent)
 {
     oldImg = image.clone();
-    newImg = image;
     skc.setStrokeWidth(3);
 }
 
 void CartoonizeCMD::undo()
 {
     newImg = oldImg.clone();
+    emit transpImg(newImg);
 }
 
 void CartoonizeCMD::redo()
@@ -45,20 +45,22 @@ void CartoonizeCMD::redo()
     // Clear the output image to black, so that the cartoon line drawings will be black (ie: not drawn).
     memset((char*)newImg.data, 0, newImg.step * newImg.rows);
     ptRst.copyTo(newImg, skcRst);
+    emit transpImg(newImg);
 }
 
 /*************** evilize command ***************/
 
-EvilizeCMD::EvilizeCMD(cv::Mat &image, QUndoCommand *parent)
-    : QUndoCommand(parent)
+EvilizeCMD::EvilizeCMD(cv::Mat &image, QObject *objParent, QUndoCommand *undoParent)
+    : QObject(objParent),
+      QUndoCommand(undoParent)
 {
     oldImg = image.clone();
-    newImg = image;
 }
 
 void EvilizeCMD::undo()
 {
-
+    newImg = oldImg.clone();
+    emit transpImg(newImg);
 }
 
 void EvilizeCMD::redo()
@@ -68,4 +70,5 @@ void EvilizeCMD::redo()
     // Clear the output image to black, so that the cartoon line drawings will be black (ie: not drawn).
     memset((char*)newImg.data, 0, newImg.step * newImg.rows);
     ptRst.copyTo(newImg, evlRst);
+    emit transpImg(newImg);
 }

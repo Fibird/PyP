@@ -22,30 +22,36 @@ signals:
     void transpImg(cv::Mat &img);
 };
 
-class CartoonizeCMD : public QUndoCommand
+class CartoonizeCMD : public QObject, public QUndoCommand
 {
+    Q_OBJECT
 private:
     cv::Mat oldImg;
     cv::Mat newImg;
     Sketchize skc;
     Paintize pt;
 public:
-    CartoonizeCMD(cv::Mat &image, QUndoCommand * parent = 0);
+    CartoonizeCMD(cv::Mat &image, QObject *objParent = 0, QUndoCommand *undoParent = 0);
     void undo() override;
     void redo() override;
+signals:
+    void transpImg(cv::Mat &img);
 };
 
-class EvilizeCMD : public QUndoCommand
+class EvilizeCMD : public QObject, public QUndoCommand
 {
+    Q_OBJECT
 private:
     cv::Mat oldImg;
     cv::Mat newImg;
     Evilize evl;
     Paintize pt;
 public:
-    EvilizeCMD(cv::Mat &image, QUndoCommand * parent = 0);
+    EvilizeCMD(cv::Mat &image, QObject *objParent = 0, QUndoCommand *undoParent = 0);
     void undo() override;
     void redo() override;
+signals:
+    void transpImg(cv::Mat &img);
 };
 
 #endif // COMMANDS_H

@@ -118,8 +118,9 @@ void MainWindow::on_action_Painting_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        cartoonifier.paintingProcess();
-        updateDisplay();
+        CartoonizeCMD *ctCmd = new CartoonizeCMD(loadedImage);
+        connect(ctCmd, &CartoonizeCMD::transpImg, this, &MainWindow::updateImage);
+        undoStack->push(ctCmd);
     }
     else
     {
@@ -142,13 +143,9 @@ void MainWindow::on_action_Sketch_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        //cartoonifier.sketchProcess();
         SketchizeCMD *skcCmd = new SketchizeCMD(loadedImage);
-        connect(skcCmd, &SketchizeCMD::transpImg, this, &MainWindow::displayMat);
+        connect(skcCmd, &SketchizeCMD::transpImg, this, &MainWindow::updateImage);
         undoStack->push(skcCmd);
-        //updateDisplay();
-
-        //displayMat(loadedImage);
     }
     else
     {
@@ -160,8 +157,9 @@ void MainWindow::on_action_Evil_triggered()
 {
     if (!cartoonifier.getInputMat().empty())
     {
-        cartoonifier.evilProcess();
-        updateDisplay();
+        EvilizeCMD *elCmd = new EvilizeCMD(loadedImage);
+        connect(elCmd, &EvilizeCMD::transpImg, this, &MainWindow::updateImage);
+        undoStack->push(elCmd);
     }
     else
     {
@@ -192,7 +190,6 @@ void MainWindow::wheelEvent(QWheelEvent *event)
 
 void MainWindow::on_actionSave_as_triggered()
 {
-    savedImage = cartoonifier.getLastResult();
     if (savedImage.empty())
     {
         QMessageBox::information(this, "Can't save null image!", "There is no image to be saved! Please open a new file and process it!");
