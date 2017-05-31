@@ -4,7 +4,6 @@
         <file alias="image-save">images/save_image.png</file>
         <file alias="about">images/about.png</file>
         <file alias="help">images/help.png</file>
-        <file alias="alien-proc">images/alien_process.png</file>
         <file alias="evil-proc">images/evil_process.png</file>
         <file alias="sketch-proc">images/hand_sketch.png</file>
         <file alias="painting-proc">images/painting_process.png</file>
@@ -14,7 +13,6 @@
         <file alias="redo-icon">images/redo.png</file>
     </qresource>
     <qresource prefix="/app_icon">
-        <file alias="app-icon">images/app_icon.png</file>
         <file alias="app-logo">logo/pyp_logo.png</file>
     </qresource>
 </RCC>
