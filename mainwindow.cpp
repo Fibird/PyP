@@ -65,12 +65,11 @@ void MainWindow::on_action_Open_triggered()
         loadedImage = cv::imread(fileFullPath.toUtf8().toStdString());
 
         cartoonifier.setInputImage(fileFullPath.toStdString());
-        cv::Mat t = cartoonifier.getInputMat();
-        displayMat(t);
+        displayMat(cartoonifier.getInputMat());
     }
 }
 
-void MainWindow::displayMat(cv::Mat &displayedImage)
+void MainWindow::displayMat(cv::Mat displayedImage)
 {
     QImage transfromedImg;
     cv::Mat tempRgb;
@@ -131,6 +130,12 @@ void MainWindow::on_action_Painting_triggered()
 void MainWindow::updateDisplay()
 {
     //displayMat(cartoonifier.getLastResult());
+}
+
+void MainWindow::updateImage(Mat img)
+{
+    savedImage = img;
+    displayMat(img);
 }
 
 void MainWindow::on_action_Sketch_triggered()

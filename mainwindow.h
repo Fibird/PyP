@@ -53,8 +53,9 @@ private:
     QAction *undoAction;
     QAction *redoAction;
 private:
-    void displayMat(Mat &displayedImage);
+    void displayMat(Mat displayedImage);
     void updateDisplay();
+    void updateImage(cv::Mat img);
     void createActions();
     void createMenus();
 };
