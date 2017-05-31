@@ -167,12 +167,6 @@ void MainWindow::on_action_Evil_triggered()
     }
 }
 
-void MainWindow::on_action_undo_triggered()
-{
-    cartoonifier.resetResult();
-    updateDisplay();
-}
-
 void MainWindow::wheelEvent(QWheelEvent *event)
 {
     if(QApplication::keyboardModifiers() == Qt::ControlModifier)

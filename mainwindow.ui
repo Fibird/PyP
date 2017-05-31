@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="cpresources.qrc">
-    <normaloff>:/app_icon/app-icon</normaloff>:/app_icon/app-icon</iconset>
+    <normaloff>:/app_icon/app-logo</normaloff>:/app_icon/app-logo</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -44,7 +44,6 @@
     <addaction name="action_Open"/>
     <addaction name="action_Save"/>
     <addaction name="actionSave_as"/>
-    <addaction name="action_undo"/>
     <addaction name="action_Exit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -73,8 +72,8 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_Open"/>
-   <addaction name="action_undo"/>
    <addaction name="action_Save"/>
+   <addaction name="actionSave_as"/>
    <addaction name="action_About"/>
    <addaction name="separator"/>
    <addaction name="action_Exit"/>
@@ -209,18 +208,6 @@
    </property>
    <property name="statusTip">
     <string>make image like an evil</string>
-   </property>
-  </action>
-  <action name="action_undo">
-   <property name="icon">
-    <iconset resource="cpresources.qrc">
-     <normaloff>:/menu_icon/undo-icon</normaloff>:/menu_icon/undo-icon</iconset>
-   </property>
-   <property name="text">
-    <string>undo</string>
-   </property>
-   <property name="statusTip">
-    <string>undo changes</string>
    </property>
   </action>
  </widget>

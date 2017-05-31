@@ -15,5 +15,6 @@
     </qresource>
     <qresource prefix="/app_icon">
         <file alias="app-icon">images/app_icon.png</file>
+        <file alias="app-logo">logo/pyp_logo.png</file>
     </qresource>
 </RCC>

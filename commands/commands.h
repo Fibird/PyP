@@ -1,11 +1,11 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 #include <QUndoCommand>
-#include <opencv2/highgui.hpp>
-#include <cartoonifier/sketchize.h>
-#include <cartoonifier/paintize.h>
-#include <cartoonifier/evilize.h>
 #include <QObject>
+#include <opencv2/highgui.hpp>
+#include "cartoonifier/sketchize.h"
+#include "cartoonifier/paintize.h"
+#include "cartoonifier/evilize.h"
 
 class SketchizeCMD : public QObject, public QUndoCommand
 {
