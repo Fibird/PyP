@@ -58,9 +58,9 @@ void MainWindow::on_action_Open_triggered()
     if (!fileFullPath.isEmpty())
     {
         loadedImage = cv::imread(fileFullPath.toUtf8().toStdString());
-
-        //cartoonifier.setInputImage(fileFullPath.toStdString());
         displayMat(loadedImage);
+        // clear undoStack every loading a new image
+        undoStack->clear();
     }
 }
 
