@@ -17,8 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     loadedImage(),
-    savedImage(),
-    cartoonifier()
+    savedImage()
 {
     ui->setupUi(this);
     fileInfo = QFileInfo();
@@ -60,8 +59,8 @@ void MainWindow::on_action_Open_triggered()
     {
         loadedImage = cv::imread(fileFullPath.toUtf8().toStdString());
 
-        cartoonifier.setInputImage(fileFullPath.toStdString());
-        displayMat(cartoonifier.getInputMat());
+        //cartoonifier.setInputImage(fileFullPath.toStdString());
+        displayMat(loadedImage);
     }
 }
 
@@ -94,7 +93,7 @@ void MainWindow::displayMat(cv::Mat displayedImage)
 
 void MainWindow::on_action_Save_triggered()
 {
-    savedImage = cartoonifier.getLastResult();
+    //savedImage = cartoonifier.getLastResult();
     if (savedImage.empty())
     {
         QMessageBox::information(this, "Can't save null image!", "There is no image to be saved! Please open a new file and process it!");
@@ -112,7 +111,7 @@ void MainWindow::on_action_About_triggered()
 
 void MainWindow::on_action_Painting_triggered()
 {
-    if (!cartoonifier.getInputMat().empty())
+    if (!loadedImage.empty())
     {
         CartoonizeCMD *ctCmd = new CartoonizeCMD(loadedImage);
         connect(ctCmd, &CartoonizeCMD::transpImg, this, &MainWindow::updateImage);
@@ -124,12 +123,7 @@ void MainWindow::on_action_Painting_triggered()
     }
 }
 
-void MainWindow::updateDisplay()
-{
-    //displayMat(cartoonifier.getLastResult());
-}
-
-void MainWindow::updateImage(Mat img)
+void MainWindow::updateImage(cv::Mat img)
 {
     savedImage = img;
     displayMat(img);
@@ -137,7 +131,7 @@ void MainWindow::updateImage(Mat img)
 
 void MainWindow::on_action_Sketch_triggered()
 {
-    if (!cartoonifier.getInputMat().empty())
+    if (!loadedImage.empty())
     {
         SketchizeCMD *skcCmd = new SketchizeCMD(loadedImage);
         connect(skcCmd, &SketchizeCMD::transpImg, this, &MainWindow::updateImage);
@@ -151,7 +145,7 @@ void MainWindow::on_action_Sketch_triggered()
 
 void MainWindow::on_action_Evil_triggered()
 {
-    if (!cartoonifier.getInputMat().empty())
+    if (!loadedImage.empty())
     {
         EvilizeCMD *elCmd = new EvilizeCMD(loadedImage);
         connect(elCmd, &EvilizeCMD::transpImg, this, &MainWindow::updateImage);

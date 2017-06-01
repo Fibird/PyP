@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <opencv2/highgui/highgui.hpp>
 #include <QGraphicsScene>
-#include "cartoonifier/cartoonifier.h"
 #include <QWheelEvent>
 #include <QFileInfo>
 #include <QUndoCommand>
@@ -44,14 +43,12 @@ private:
     cv::Mat loadedImage;
     QGraphicsScene *scene;
     cv::Mat savedImage;
-    Cartoonifier cartoonifier;
     QFileInfo fileInfo;
     QUndoStack *undoStack;
     QAction *undoAction;
     QAction *redoAction;
 private:
-    void displayMat(Mat displayedImage);
-    void updateDisplay();
+    void displayMat(cv::Mat displayedImage);
     void updateImage(cv::Mat img);
     void createActions();
     void createMenus();
