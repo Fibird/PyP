@@ -1,7 +1,7 @@
 #ifndef CARTOONIFIER_H
 #define CARTOONIFIER_H
 #include <iostream>
-#include <opencv2/highgui.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 #include <iostream>
 

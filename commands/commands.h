@@ -2,7 +2,7 @@
 #define COMMANDS_H
 #include <QUndoCommand>
 #include <QObject>
-#include <opencv2/highgui.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include "cartoonifier/sketchize.h"
 #include "cartoonifier/paintize.h"
 #include "cartoonifier/evilize.h"

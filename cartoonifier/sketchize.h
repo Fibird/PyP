@@ -1,6 +1,6 @@
 #ifndef SKETCHIZE_H
 #define SKETCHIZE_H
-#include <opencv2/highgui.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 class Sketchize
 {

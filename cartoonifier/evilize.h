@@ -1,6 +1,6 @@
 #ifndef EVILIZE_H
 #define EVILIZE_H
-#include <opencv2/highgui.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 class Evilize
 {

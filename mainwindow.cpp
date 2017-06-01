@@ -11,11 +11,7 @@
 #include <QKeySequence>
 #include <QIcon>
 #include <commands/commands.h>
-
-// OpenCV libray headers
-#include <opencv2/opencv.hpp>
-#include <opencv/cv.h>
-#include <opencv2/imgproc.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

@@ -1,5 +1,4 @@
 #include "commands/commands.h"
-#include <QDebug>
 
 /*************** sketchize command ***************/
 SketchizeCMD::SketchizeCMD(cv::Mat &image, int strokeWidth, QObject *objParent, QUndoCommand *undoParent)

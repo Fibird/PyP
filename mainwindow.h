@@ -2,8 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <QGraphicsScene>
 #include "cartoonifier/cartoonifier.h"
 #include <QWheelEvent>
