@@ -38,13 +38,43 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
-# OpenCV library
-INCLUDEPATH += $$(OPENCV_DIR)/include
-win32:CONFIG(release, debug|release): LIBS += -L$$(OPENCV_DIR)/x64/vc14/lib/ -lopencv_world310
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$(OPENCV_DIR)/x64/vc14/lib/ -lopencv_world310d
-else:unix: LIBS += -L$$(OPENCV_DIR)/x64/vc14/lib/ -lopencv_world310
+win32 {
+message("Using win32 configuration")
 
-message(Path of your OpenCV is $$(OPENCV_DIR) and please check the validation of it!)
+# change this variable according to your path of opencv
+OPENCV_PATH = D:/opencv3.0/opencv # Note: update with the correct OpenCV version
+# change this variable according to your version of opencv
+LIBS_PATH = "$$OPENCV_PATH/build/x64/vc14/lib" #project compiled using Visual C++ 2010 32bit compiler
 
+    CONFIG(debug, debug|release) {
+    LIBS     += -L$$LIBS_PATH \
+                -lopencv_world310
+    }
+
+    CONFIG(release, debug|release) {
+    LIBS     += -L$$LIBS_PATH \
+                -lopencv_world310d
+    }
+}
+
+unix {
+message("Using unix configuration")
+# change this variable according to your path of opencv
+OPENCV_PATH = /usr/opencv2
+# change this variable according to your version of opencv
+LIBS_PATH = /usr/lib
+
+LIBS     += \
+    -L$$LIBS_PATH \
+    -lopencv_core \
+    -lopencv_highgui
+}
+
+INCLUDEPATH += \
+    $$OPENCV_PATH/build/include/
+
+message("OpenCV path: $$OPENCV_PATH")
+message("Includes path: $$INCLUDEPATH")
+message("Libraries: $$LIBS")
 RESOURCES += \
     cpresources.qrc
