@@ -48,16 +48,16 @@ LIBS_PATH = "$$OPENCV_PATH/build/x86/vc12/lib" #project compiled using Visual C+
 
     CONFIG(debug, debug|release) {
     LIBS     += -L$$LIBS_PATH \
-                -lopencv_core248 \
-                -lopencv_imgproc248 \
-                -lopencv_highgui248
+                -lopencv_core248d \
+                -lopencv_imgproc248d \
+                -lopencv_highgui248d
     }
 
     CONFIG(release, debug|release) {
     LIBS     += -L$$LIBS_PATH \
-                -lopencv_core248d \
-                -lopencv_imgproc248d \
-                -lopencv_highgui248d
+                -lopencv_core248 \
+                -lopencv_imgproc248 \
+                -lopencv_highgui248
     }
 }
 
