@@ -42,18 +42,22 @@ win32 {
 message("Using win32 configuration")
 
 # change this variable according to your path of opencv
-OPENCV_PATH = D:/opencv3.0/opencv # Note: update with the correct OpenCV version
+OPENCV_PATH = D:/opencv # Note: update with the correct OpenCV version
 # change this variable according to your version of opencv
-LIBS_PATH = "$$OPENCV_PATH/build/x64/vc14/lib" #project compiled using Visual C++ 2010 32bit compiler
+LIBS_PATH = "$$OPENCV_PATH/build/x86/vc12/lib" #project compiled using Visual C++ 2010 32bit compiler
 
     CONFIG(debug, debug|release) {
     LIBS     += -L$$LIBS_PATH \
-                -lopencv_world310
+                -lopencv_core248 \
+                -lopencv_imgproc248 \
+                -lopencv_highgui248
     }
 
     CONFIG(release, debug|release) {
     LIBS     += -L$$LIBS_PATH \
-                -lopencv_world310d
+                -lopencv_core248d \
+                -lopencv_imgproc248d \
+                -lopencv_highgui248d
     }
 }
 
