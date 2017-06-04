@@ -57,7 +57,7 @@ void MainWindow::on_action_Open_triggered()
 
     if (!fileFullPath.isEmpty())
     {
-        loadedImage = cv::imread(fileFullPath.toUtf8().toStdString());
+        loadedImage = cv::imread(fileFullPath.toLocal8Bit().toStdString());
         displayMat(loadedImage);
         // clear undoStack every loading a new image
         undoStack->clear();
