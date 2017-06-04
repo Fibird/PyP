@@ -38,13 +38,16 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
+RESOURCES += \
+    cpresources.qrc
+
 win32 {
 message("Using win32 configuration")
 
 # change this variable according to your path of opencv
 OPENCV_PATH = D:/opencv3.0/opencv # Note: update with the correct OpenCV version
 # change this variable according to your version of opencv
-LIBS_PATH = "$$OPENCV_PATH/build/x64/vc14/lib" #project compiled using Visual C++ 2010 32bit compiler
+LIBS_PATH = "$$OPENCV_PATH/build/x64/vc14/lib"
 
     CONFIG(debug, debug|release) {
     LIBS     += -L$$LIBS_PATH \
@@ -76,7 +79,4 @@ INCLUDEPATH += \
 message("OpenCV path: $$OPENCV_PATH")
 message("Includes path: $$INCLUDEPATH")
 message("Libraries: $$LIBS")
-RESOURCES += \
-    cpresources.qrc
 
-TRANSLATIONS = zh_CH.ts

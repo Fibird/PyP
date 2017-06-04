@@ -62,7 +62,7 @@
    </widget>
    <widget class="QMenu" name="menusetting">
     <property name="title">
-     <string>setting</string>
+     <string>&amp;Setting</string>
     </property>
     <widget class="QMenu" name="menulanguage">
      <property name="title">
