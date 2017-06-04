@@ -48,12 +48,12 @@ LIBS_PATH = "$$OPENCV_PATH/build/x64/vc14/lib" #project compiled using Visual C+
 
     CONFIG(debug, debug|release) {
     LIBS     += -L$$LIBS_PATH \
-                -lopencv_world310
+                -lopencv_world310d
     }
 
     CONFIG(release, debug|release) {
     LIBS     += -L$$LIBS_PATH \
-                -lopencv_world310d
+                -lopencv_world310
     }
 }
 
