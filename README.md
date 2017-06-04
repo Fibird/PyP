@@ -2,7 +2,7 @@
 
 # Overview
 
-![logo](http://ogx55zj9n.bkt.clouddn.com/17-5-28/74131089.jpg)
+![logo](http://ogx55zj9n.bkt.clouddn.com/pyp_logo.png)
 
 PyP /paip/ is a tiny photo editor. The name "PyP" is a acronym for "Paint your Photos". Just like its name goes, you can "paint" your photos by this software.
 
