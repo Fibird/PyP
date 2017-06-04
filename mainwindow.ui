@@ -54,7 +54,7 @@
    </widget>
    <widget class="QMenu" name="menu_Cartoonifier">
     <property name="title">
-     <string>&amp;Cartoonifier</string>
+     <string>&amp;Process</string>
     </property>
     <addaction name="action_Painting"/>
     <addaction name="action_Sketch"/>
@@ -119,6 +119,9 @@
    <property name="text">
     <string>&amp;About</string>
    </property>
+   <property name="toolTip">
+    <string>about</string>
+   </property>
    <property name="statusTip">
     <string>about this software</string>
    </property>
@@ -132,7 +135,7 @@
     <string>&amp;Save</string>
    </property>
    <property name="statusTip">
-    <string>save current image</string>
+    <string>save</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
@@ -145,6 +148,12 @@
    </property>
    <property name="text">
     <string>Save &amp;as</string>
+   </property>
+   <property name="toolTip">
+    <string>save as</string>
+   </property>
+   <property name="statusTip">
+    <string>save as</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+S</string>
@@ -168,13 +177,13 @@
   <action name="action_Painting">
    <property name="icon">
     <iconset resource="cpresources.qrc">
-     <normaloff>:/menu_icon/painting-proc</normaloff>:/menu_icon/painting-proc</iconset>
+     <normaloff>:/menu_icon/cartoon-proc</normaloff>:/menu_icon/cartoon-proc</iconset>
    </property>
    <property name="text">
     <string>&amp;Painting</string>
    </property>
    <property name="toolTip">
-    <string>painting process</string>
+    <string>cartoon effect</string>
    </property>
    <property name="statusTip">
     <string>make image like a paint</string>
@@ -189,7 +198,7 @@
     <string>&amp;Sketch</string>
    </property>
    <property name="toolTip">
-    <string>sketch process</string>
+    <string>sketch effect</string>
    </property>
    <property name="statusTip">
     <string>make image like a sketch</string>
@@ -204,7 +213,7 @@
     <string>&amp;Evil</string>
    </property>
    <property name="toolTip">
-    <string>evil process</string>
+    <string>villain effect</string>
    </property>
    <property name="statusTip">
     <string>make image like an evil</string>
