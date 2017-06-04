@@ -10,7 +10,7 @@
 #include <QColorDialog>
 #include <QKeySequence>
 #include <QIcon>
-#include <commands/commands.h>
+#include "commands/commands.h"
 #include <opencv2/imgproc/imgproc.hpp>
 
 MainWindow::MainWindow(QWidget *parent) :

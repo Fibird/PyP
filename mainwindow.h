@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #include <QUndoCommand>
 #include <QUndoStack>
+#include <QTranslator>
 
 namespace Ui {
 class MainWindow;
@@ -47,6 +48,8 @@ private:
     QUndoStack *undoStack;
     QAction *undoAction;
     QAction *redoAction;
+    QTranslator m_translator;
+    QTranslator m_translatorQt;
 private:
     void displayMat(cv::Mat displayedImage);
     void updateImage(cv::Mat img);

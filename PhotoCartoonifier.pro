@@ -78,3 +78,5 @@ message("Includes path: $$INCLUDEPATH")
 message("Libraries: $$LIBS")
 RESOURCES += \
     cpresources.qrc
+
+TRANSLATIONS = zh_CH.ts

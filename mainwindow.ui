@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Cartoonifier</string>
+   <string>PyP</string>
   </property>
   <property name="windowIcon">
    <iconset resource="cpresources.qrc">
@@ -56,15 +56,32 @@
     <property name="title">
      <string>&amp;Process</string>
     </property>
-    <addaction name="action_Painting"/>
     <addaction name="action_Sketch"/>
+    <addaction name="action_Painting"/>
     <addaction name="action_Evil"/>
+   </widget>
+   <widget class="QMenu" name="menusetting">
+    <property name="title">
+     <string>setting</string>
+    </property>
+    <widget class="QMenu" name="menulanguage">
+     <property name="title">
+      <string>language</string>
+     </property>
+     <addaction name="actionEnglish"/>
+     <addaction name="actionChinese"/>
+    </widget>
+    <addaction name="menulanguage"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menu_Cartoonifier"/>
+   <addaction name="menusetting"/>
    <addaction name="menu_Help"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="windowTitle">
+    <string>PyP</string>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -89,9 +106,9 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="action_Sketch"/>
    <addaction name="action_Painting"/>
    <addaction name="action_Evil"/>
-   <addaction name="action_Sketch"/>
   </widget>
   <action name="action_Open">
    <property name="icon">
@@ -180,13 +197,16 @@
      <normaloff>:/menu_icon/cartoon-proc</normaloff>:/menu_icon/cartoon-proc</iconset>
    </property>
    <property name="text">
-    <string>&amp;Painting</string>
+    <string>&amp;Cartoon</string>
+   </property>
+   <property name="iconText">
+    <string>cartoon</string>
    </property>
    <property name="toolTip">
     <string>cartoon effect</string>
    </property>
    <property name="statusTip">
-    <string>make image like a paint</string>
+    <string>carton effect</string>
    </property>
   </action>
   <action name="action_Sketch">
@@ -201,7 +221,7 @@
     <string>sketch effect</string>
    </property>
    <property name="statusTip">
-    <string>make image like a sketch</string>
+    <string>sketch effect</string>
    </property>
   </action>
   <action name="action_Evil">
@@ -216,7 +236,23 @@
     <string>villain effect</string>
    </property>
    <property name="statusTip">
-    <string>make image like an evil</string>
+    <string>villain effect</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
+  <action name="actionChinese">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Chinese</string>
    </property>
   </action>
  </widget>
