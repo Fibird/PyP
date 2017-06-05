@@ -9,6 +9,7 @@
 #include <QUndoCommand>
 #include <QUndoStack>
 #include <QTranslator>
+#include <QActionGroup>
 
 namespace Ui {
 class MainWindow;
@@ -48,13 +49,17 @@ private:
     QUndoStack *undoStack;
     QAction *undoAction;
     QAction *redoAction;
-    QTranslator m_translator;
-    QTranslator m_translatorQt;
+    QTranslator appTranslator;
+    QTranslator qtTranslator;
+    QString langPath;
+    QActionGroup *languageActionGroup;
 private:
     void displayMat(cv::Mat displayedImage);
     void updateImage(cv::Mat img);
     void createActions();
     void createMenus();
+    void createLanguageMenu();
+    void switchLanguage(QAction *action);
 };
 
 #endif // MAINWINDOW_H
