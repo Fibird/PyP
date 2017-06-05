@@ -10,7 +10,7 @@
 #include <QColorDialog>
 #include <QKeySequence>
 #include <QIcon>
-#include <commands/commands.h>
+#include "commands/commands.h"
 #include <opencv2/imgproc/imgproc.hpp>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -31,17 +31,23 @@ void MainWindow::createActions()
     // undo and redo actions
     undoAction = undoStack->createUndoAction(this, tr("&Undo"));
     undoAction->setShortcut(QKeySequence::Undo);
+    undoAction->setToolTip(tr("undo"));
+    undoAction->setStatusTip(tr("undo"));
     undoAction->setIcon(QIcon(tr(":/menu_icon/undo-icon")));
 
     redoAction = undoStack->createRedoAction(this, tr("&Redo"));
     redoAction->setShortcut(QKeySequence::Redo);
+    redoAction->setToolTip(tr("redo"));
+    redoAction->setStatusTip(tr("redo"));
     redoAction->setIcon(QIcon(tr(":/menu_icon/redo-icon")));
 }
 
 void MainWindow::createMenus()
 {
     ui->mainToolBar->addAction(undoAction);
+    ui->menuFile->addAction(undoAction);
     ui->mainToolBar->addAction(redoAction);
+    ui->menuFile->addAction(redoAction);
 }
 
 MainWindow::~MainWindow()
@@ -57,7 +63,7 @@ void MainWindow::on_action_Open_triggered()
 
     if (!fileFullPath.isEmpty())
     {
-        loadedImage = cv::imread(fileFullPath.toUtf8().toStdString());
+        loadedImage = cv::imread(fileFullPath.toLocal8Bit().toStdString());
         displayMat(loadedImage);
         // clear undoStack every loading a new image
         undoStack->clear();

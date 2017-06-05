@@ -11,6 +11,7 @@
         <file alias="undo-icon">images/undo.png</file>
         <file alias="save-as-icon">images/save_as.png</file>
         <file alias="redo-icon">images/redo.png</file>
+        <file alias="cartoon-proc">images/cartoon_process.png</file>
     </qresource>
     <qresource prefix="/app_icon">
         <file alias="app-logo">logo/pyp_logo.png</file>
