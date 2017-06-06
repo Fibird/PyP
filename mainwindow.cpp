@@ -10,6 +10,10 @@
 #include <QColorDialog>
 #include <QKeySequence>
 #include <QIcon>
+#include <QDir>
+#include <QStringList>
+#include <QString>
+#include <QLocale>
 #include "commands/commands.h"
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -24,6 +28,12 @@ MainWindow::MainWindow(QWidget *parent) :
     undoStack = new QUndoStack(this);
     createActions();
     createMenus();
+    // install translators
+    qApp->installTranslator(&appTranslator);
+    qApp->installTranslator(&qtTranslator);
+    createLanguageMenu();
+    ui->retranslateUi(this);
+    retranslateUi();
 }
 
 void MainWindow::createActions()
@@ -203,4 +213,62 @@ void MainWindow::on_action_Exit_triggered()
     {
         this->close();
     }
+}
+
+void MainWindow::createLanguageMenu()
+{
+    languageActionGroup = new QActionGroup(ui->menulanguage);
+    languageActionGroup->setExclusive(true);
+    connect(languageActionGroup, &QActionGroup::triggered, this, &MainWindow::switchLanguage);
+    langPath = QApplication::applicationDirPath();
+    langPath.append("/languages");
+    QDir qmDir(langPath);
+    QStringList fileNames = qmDir.entryList(QStringList("pyp_*.qm"));
+
+    // format systems languages
+    QString defaultLocale = QLocale::system().name();
+    defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
+
+    for (int i = 0; i < fileNames.size(); ++i)
+    {
+        // get locale extracted by filename
+        QString locale;
+        locale = fileNames[i];
+        locale.truncate(locale.lastIndexOf('.'));
+        locale.remove(0, locale.indexOf('_') + 1);
+
+        QString lang = QLocale::languageToString(QLocale(locale).language());
+        QAction *action = new QAction(tr("&%1 %2").arg(i + 1).arg(lang), this);
+        action->setCheckable(true);
+        action->setData(locale);
+
+        ui->menulanguage->addAction(action);
+        languageActionGroup->addAction(action);
+
+        // set default translations and language checked
+        if (defaultLocale == "zh")
+        {
+            action->setChecked(true);
+            switchLanguage(action);
+        }
+    }
+}
+
+void MainWindow::switchLanguage(QAction *action)
+{
+    QString locale = action->data().toString();
+    QString qmDir(langPath);
+    appTranslator.load("pyp_" + locale, qmDir);
+    qtTranslator.load("qt_" + locale, qmDir);
+    ui->retranslateUi(this);
+}
+
+void MainWindow::retranslateUi()
+{
+    undoAction->setText(tr("&Undo"));
+    undoAction->setToolTip(tr("undo"));
+    undoAction->setStatusTip(tr("undo"));
+    redoAction->setText(tr("&Redo"));
+    redoAction->setToolTip(tr("redo"));
+    redoAction->setStatusTip(tr("redo"));
 }

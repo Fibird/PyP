@@ -68,8 +68,6 @@
      <property name="title">
       <string>language</string>
      </property>
-     <addaction name="actionEnglish"/>
-     <addaction name="actionChinese"/>
     </widget>
     <addaction name="menulanguage"/>
    </widget>
@@ -252,6 +250,12 @@
     <bool>true</bool>
    </property>
    <property name="text">
+    <string>中文</string>
+   </property>
+   <property name="toolTip">
+    <string>Chinese</string>
+   </property>
+   <property name="statusTip">
     <string>Chinese</string>
    </property>
   </action>
