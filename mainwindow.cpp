@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // install translators
     qApp->installTranslator(&appTranslator);
     qApp->installTranslator(&qtTranslator);
+    createLanguageMenu();
+    ui->retranslateUi(this);
 }
 
 void MainWindow::createActions()
@@ -252,5 +254,8 @@ void MainWindow::createLanguageMenu()
 void MainWindow::switchLanguage(QAction *action)
 {
     QString locale = action->data().toString();
-    QString qmPath =
+    QString qmDir(langPath);
+    appTranslator.load("pyp_" + locale, qmDir);
+    qtTranslator.load("qt_" + locale, qmDir);
+    ui->retranslateUi(this);
 }
