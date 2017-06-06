@@ -261,6 +261,7 @@ void MainWindow::switchLanguage(QAction *action)
     appTranslator.load("pyp_" + locale, qmDir);
     qtTranslator.load("qt_" + locale, qmDir);
     ui->retranslateUi(this);
+    retranslateUi();
 }
 
 void MainWindow::retranslateUi()
