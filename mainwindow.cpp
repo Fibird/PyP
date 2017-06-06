@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qApp->installTranslator(&qtTranslator);
     createLanguageMenu();
     ui->retranslateUi(this);
+    retranslateUi();
 }
 
 void MainWindow::createActions()
@@ -227,6 +228,7 @@ void MainWindow::createLanguageMenu()
     // format systems languages
     QString defaultLocale = QLocale::system().name();
     defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
+
     for (int i = 0; i < fileNames.size(); ++i)
     {
         // get locale extracted by filename
@@ -244,9 +246,10 @@ void MainWindow::createLanguageMenu()
         languageActionGroup->addAction(action);
 
         // set default translations and language checked
-        if (defaultLocale == locale)
+        if (defaultLocale == "zh")
         {
             action->setChecked(true);
+            switchLanguage(action);
         }
     }
 }
@@ -258,4 +261,14 @@ void MainWindow::switchLanguage(QAction *action)
     appTranslator.load("pyp_" + locale, qmDir);
     qtTranslator.load("qt_" + locale, qmDir);
     ui->retranslateUi(this);
+}
+
+void MainWindow::retranslateUi()
+{
+    undoAction->setText(tr("&Undo"));
+    undoAction->setToolTip(tr("undo"));
+    undoAction->setStatusTip(tr("undo"));
+    redoAction->setText(tr("&Redo"));
+    redoAction->setToolTip(tr("redo"));
+    redoAction->setStatusTip(tr("redo"));
 }

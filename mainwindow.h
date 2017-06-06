@@ -60,6 +60,7 @@ private:
     void createMenus();
     void createLanguageMenu();
     void switchLanguage(QAction *action);
+    void retranslateUi();
 };
 
 #endif // MAINWINDOW_H

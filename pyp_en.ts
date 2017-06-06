@@ -108,7 +108,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="186"/>
-        <location filename="mainwindow.cpp" line="211"/>
+        <location filename="mainwindow.cpp" line="212"/>
         <source>exit</source>
         <translation type="unfinished">exit</translation>
     </message>
@@ -176,82 +176,88 @@
         <translation type="unfinished">Chinese</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="41"/>
+        <location filename="mainwindow.cpp" line="42"/>
+        <location filename="mainwindow.cpp" line="266"/>
         <source>&amp;Undo</source>
         <translation type="unfinished">&amp;Undo</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="43"/>
         <location filename="mainwindow.cpp" line="44"/>
+        <location filename="mainwindow.cpp" line="45"/>
+        <location filename="mainwindow.cpp" line="267"/>
+        <location filename="mainwindow.cpp" line="268"/>
         <source>undo</source>
         <translation type="unfinished">undo</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="45"/>
+        <location filename="mainwindow.cpp" line="46"/>
         <source>:/menu_icon/undo-icon</source>
         <translation type="unfinished">:/menu_icon/undo-icon</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="47"/>
+        <location filename="mainwindow.cpp" line="48"/>
+        <location filename="mainwindow.cpp" line="269"/>
         <source>&amp;Redo</source>
         <translation type="unfinished">&amp;Redo</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="49"/>
         <location filename="mainwindow.cpp" line="50"/>
+        <location filename="mainwindow.cpp" line="51"/>
+        <location filename="mainwindow.cpp" line="270"/>
+        <location filename="mainwindow.cpp" line="271"/>
         <source>redo</source>
         <translation type="unfinished">redo</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="51"/>
+        <location filename="mainwindow.cpp" line="52"/>
         <source>:/menu_icon/redo-icon</source>
         <translation type="unfinished">:/menu_icon/redo-icon</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="69"/>
+        <location filename="mainwindow.cpp" line="70"/>
         <source>Open Image</source>
         <translation type="unfinished">Open Image</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="70"/>
-        <location filename="mainwindow.cpp" line="201"/>
+        <location filename="mainwindow.cpp" line="71"/>
+        <location filename="mainwindow.cpp" line="202"/>
         <source>Image Files (*.png *.jpg *.jpeg *.bmp)</source>
         <translation type="unfinished">Image Files (*.png *.jpg *.jpeg *.bmp)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="124"/>
+        <location filename="mainwindow.cpp" line="125"/>
         <source>About this application</source>
         <translation type="unfinished">About this application</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="124"/>
+        <location filename="mainwindow.cpp" line="125"/>
         <source>Copyright(c)2017 Chaoyang Liu.
 This software is under GPLv3.0 license.</source>
         <translation type="unfinished">Copyright(c)2017 Chaoyang Liu.
 This software is under GPLv3.0 license.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="199"/>
+        <location filename="mainwindow.cpp" line="200"/>
         <source>Save File</source>
         <translation type="unfinished">Save File</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="211"/>
+        <location filename="mainwindow.cpp" line="212"/>
         <source>Do you really want to exit?</source>
         <translation type="unfinished">Do you really want to exit?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="211"/>
+        <location filename="mainwindow.cpp" line="212"/>
         <source>Yes</source>
         <translation type="unfinished">Yes</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="211"/>
+        <location filename="mainwindow.cpp" line="212"/>
         <source>No</source>
         <translation type="unfinished">No</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="239"/>
+        <location filename="mainwindow.cpp" line="240"/>
         <source>&amp;%1 %2</source>
         <translation type="unfinished">&amp;%1 %2</translation>
     </message>
