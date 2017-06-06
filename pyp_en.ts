@@ -177,15 +177,15 @@
     </message>
     <message>
         <location filename="mainwindow.cpp" line="42"/>
-        <location filename="mainwindow.cpp" line="266"/>
+        <location filename="mainwindow.cpp" line="269"/>
         <source>&amp;Undo</source>
         <translation type="unfinished">&amp;Undo</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="44"/>
         <location filename="mainwindow.cpp" line="45"/>
-        <location filename="mainwindow.cpp" line="267"/>
-        <location filename="mainwindow.cpp" line="268"/>
+        <location filename="mainwindow.cpp" line="270"/>
+        <location filename="mainwindow.cpp" line="271"/>
         <source>undo</source>
         <translation type="unfinished">undo</translation>
     </message>
@@ -196,15 +196,15 @@
     </message>
     <message>
         <location filename="mainwindow.cpp" line="48"/>
-        <location filename="mainwindow.cpp" line="269"/>
+        <location filename="mainwindow.cpp" line="272"/>
         <source>&amp;Redo</source>
         <translation type="unfinished">&amp;Redo</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="50"/>
         <location filename="mainwindow.cpp" line="51"/>
-        <location filename="mainwindow.cpp" line="270"/>
-        <location filename="mainwindow.cpp" line="271"/>
+        <location filename="mainwindow.cpp" line="273"/>
+        <location filename="mainwindow.cpp" line="274"/>
         <source>redo</source>
         <translation type="unfinished">redo</translation>
     </message>
@@ -257,7 +257,7 @@ This software is under GPLv3.0 license.</translation>
         <translation type="unfinished">No</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="240"/>
+        <location filename="mainwindow.cpp" line="241"/>
         <source>&amp;%1 %2</source>
         <translation type="unfinished">&amp;%1 %2</translation>
     </message>

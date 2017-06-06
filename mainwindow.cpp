@@ -234,6 +234,7 @@ void MainWindow::createLanguageMenu()
         // get locale extracted by filename
         QString locale;
         locale = fileNames[i];
+        qDebug() << locale;
         locale.truncate(locale.lastIndexOf('.'));
         locale.remove(0, locale.indexOf('_') + 1);
 
@@ -241,12 +242,12 @@ void MainWindow::createLanguageMenu()
         QAction *action = new QAction(tr("&%1 %2").arg(i + 1).arg(lang), this);
         action->setCheckable(true);
         action->setData(locale);
-
+        qDebug() << lang;
         ui->menulanguage->addAction(action);
         languageActionGroup->addAction(action);
 
         // set default translations and language checked
-        if (defaultLocale == "zh")
+        if (defaultLocale == locale)
         {
             action->setChecked(true);
             switchLanguage(action);

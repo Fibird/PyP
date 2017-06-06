@@ -42,7 +42,7 @@ RESOURCES += \
     cpresources.qrc
 
 TRANSLATIONS += pyp_en.ts \
-                pyp_zh_CH.ts
+                pyp_zh.ts
 
 win32 {
 message("Using win32 configuration")
