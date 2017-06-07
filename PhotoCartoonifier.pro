@@ -44,6 +44,10 @@ RESOURCES += \
 TRANSLATIONS += pyp_en.ts \
                 pyp_zh.ts
 
+CONFIG += OPENCV3
+
+OPENCV3 {
+
 win32 {
 message("Using win32 configuration")
 
@@ -63,19 +67,31 @@ LIBS_PATH = "$$OPENCV_PATH/build/x64/vc14/lib" #project compiled using Visual C+
     }
 }
 
-unix {
-message("Using unix configuration")
+} else {
+
+win32 {
+message("Using win32 configuration")
+
 # change this variable according to your path of opencv
-OPENCV_PATH = /usr/opencv2
+OPENCV_PATH = D:/opencv # Note: update with the correct OpenCV version
 # change this variable according to your version of opencv
-LIBS_PATH = /usr/lib
+LIBS_PATH = "$$OPENCV_PATH/build/x86/vc12/lib" #project compiled using Visual C++ 2013 32bit compiler
 
-LIBS     += \
-    -L$$LIBS_PATH \
-    -lopencv_core \
-    -lopencv_highgui
+    CONFIG(debug, debug|release) {
+    LIBS     += -L$$LIBS_PATH \
+                -lopencv_core248d \
+                -lopencv_imgproc248d \
+                -lopencv_highgui248d
+    }
+
+    CONFIG(release, debug|release) {
+    LIBS     += -L$$LIBS_PATH \
+                -lopencv_core248 \
+                -lopencv_imgproc248 \
+                -lopencv_highgui248
+    }
 }
-
+}
 INCLUDEPATH += \
     $$OPENCV_PATH/build/include/
 
