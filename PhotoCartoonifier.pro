@@ -43,8 +43,9 @@ RESOURCES += \
 
 TRANSLATIONS += pyp_en.ts \
                 pyp_zh.ts
-
-CONFIG += OPENCV3
+# you need to set a environment called OPENCV_VERSION
+# whose value is OPENCV3 or OPENCV2 according to your opencv version
+CONFIG += $$(OPENCV_VERSION)
 
 OPENCV3 {
 
@@ -67,7 +68,9 @@ LIBS_PATH = "$$OPENCV_PATH/build/x64/vc14/lib" #project compiled using Visual C+
     }
 }
 
-} else {
+}
+
+OPENCV2 {
 
 win32 {
 message("Using win32 configuration")
@@ -95,6 +98,7 @@ LIBS_PATH = "$$OPENCV_PATH/build/x86/vc12/lib" #project compiled using Visual C+
 INCLUDEPATH += \
     $$OPENCV_PATH/build/include/
 
+message("OpenCV version: $$(OPENCV_VERSION)")
 message("OpenCV path: $$OPENCV_PATH")
 message("Includes path: $$INCLUDEPATH")
 message("Libraries: $$LIBS")
