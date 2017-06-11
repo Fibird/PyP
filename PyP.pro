@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = PhotoCartoonifier
+TARGET = PyP
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -41,8 +41,13 @@ FORMS    += mainwindow.ui
 RESOURCES += \
     cpresources.qrc
 
-TRANSLATIONS += pyp_en.ts \
-                pyp_zh.ts
+TRANSLATIONS += languages/pyp_en.ts \
+                languages/pyp_zh.ts
+
+DISTFILES += \
+    languages/pyp_en.ts \
+    languages/pyp_zh.ts
+
 # you need to set a environment called OPENCV_VERSION
 # whose value is OPENCV3 or OPENCV2 according to your opencv version
 CONFIG += $$(OPENCV_VERSION)
