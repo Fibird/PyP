@@ -5,8 +5,6 @@
 #include <QPixmap>
 #include <QMessageBox>
 #include <QKeyEvent>
-#include <QFileInfo>
-#include <QDebug>
 #include <QColorDialog>
 #include <QKeySequence>
 #include <QIcon>

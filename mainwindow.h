@@ -3,13 +3,16 @@
 
 #include <QMainWindow>
 #include <opencv2/highgui/highgui.hpp>
-#include <QGraphicsScene>
-#include <QWheelEvent>
 #include <QFileInfo>
-#include <QUndoCommand>
-#include <QUndoStack>
 #include <QTranslator>
-#include <QActionGroup>
+
+class QGraphicsScene;
+class QWheelEvent;
+class QFileInfo;
+class QUndoCommand;
+class QUndoStack;
+class QTranslator;
+class QActionGroup;
 
 namespace Ui {
 class MainWindow;
