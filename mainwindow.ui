@@ -237,28 +237,6 @@
     <string>villain effect</string>
    </property>
   </action>
-  <action name="actionEnglish">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>English</string>
-   </property>
-  </action>
-  <action name="actionChinese">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>中文</string>
-   </property>
-   <property name="toolTip">
-    <string>Chinese</string>
-   </property>
-   <property name="statusTip">
-    <string>Chinese</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

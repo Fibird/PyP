@@ -238,7 +238,10 @@ void MainWindow::createLanguageMenu()
         locale.truncate(locale.lastIndexOf('.'));
         locale.remove(0, locale.indexOf('_') + 1);
 
-        QString lang = QLocale::languageToString(QLocale(locale).language());
+        QTranslator translator;
+        translator.load(fileNames[i], qmDir.absolutePath());
+        //To check the translation of the string "English" in the "MainWindow" context.
+        QString lang = translator.translate("MainWindow", "English");
         QAction *action = new QAction(tr("&%1 %2").arg(i + 1).arg(lang), this);
         action->setCheckable(true);
         action->setData(locale);

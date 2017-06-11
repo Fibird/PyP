@@ -160,32 +160,29 @@
         <translation type="unfinished">邪恶效果</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="245"/>
+        <location filename="mainwindow.cpp" line="244"/>
         <source>English</source>
-        <translation type="unfinished">English</translation>
+        <translation type="unfinished">中文</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="253"/>
         <source>中文</source>
-        <translation type="unfinished">中文</translation>
+        <translation type="obsolete">English</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="256"/>
-        <location filename="mainwindow.ui" line="259"/>
         <source>Chinese</source>
-        <translation type="unfinished">中文</translation>
+        <translation type="obsolete">中文</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="42"/>
-        <location filename="mainwindow.cpp" line="269"/>
+        <location filename="mainwindow.cpp" line="273"/>
         <source>&amp;Undo</source>
         <translation type="unfinished">撤销(&amp;U)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="44"/>
         <location filename="mainwindow.cpp" line="45"/>
-        <location filename="mainwindow.cpp" line="270"/>
-        <location filename="mainwindow.cpp" line="271"/>
+        <location filename="mainwindow.cpp" line="274"/>
+        <location filename="mainwindow.cpp" line="275"/>
         <source>undo</source>
         <translation type="unfinished">撤销</translation>
     </message>
@@ -196,15 +193,15 @@
     </message>
     <message>
         <location filename="mainwindow.cpp" line="48"/>
-        <location filename="mainwindow.cpp" line="272"/>
+        <location filename="mainwindow.cpp" line="276"/>
         <source>&amp;Redo</source>
         <translation type="unfinished">恢复(&amp;R)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="50"/>
         <location filename="mainwindow.cpp" line="51"/>
-        <location filename="mainwindow.cpp" line="273"/>
-        <location filename="mainwindow.cpp" line="274"/>
+        <location filename="mainwindow.cpp" line="277"/>
+        <location filename="mainwindow.cpp" line="278"/>
         <source>redo</source>
         <translation type="unfinished">恢复</translation>
     </message>
@@ -257,7 +254,7 @@ This software is under GPLv3.0 license.</source>
         <translation type="unfinished">否</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="241"/>
+        <location filename="mainwindow.cpp" line="245"/>
         <source>&amp;%1 %2</source>
         <translation type="unfinished">&amp;%1 %2</translation>
     </message>
