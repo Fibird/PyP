@@ -162,7 +162,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="244"/>
         <source>English</source>
-        <translation type="unfinished">中文</translation>
+        <translation type="unfinished">简体中文</translation>
     </message>
     <message>
         <source>中文</source>

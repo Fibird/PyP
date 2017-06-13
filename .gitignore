@@ -40,5 +40,8 @@ Makefile*
 # QtCtreator CMake
 CMakeLists.txt.user*
 
+# language binary file
+*.qm
+
 
 # End of https://www.gitignore.io/api/qt
