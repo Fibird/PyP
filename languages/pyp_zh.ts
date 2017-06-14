@@ -108,7 +108,6 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="186"/>
-        <location filename="../mainwindow.cpp" line="212"/>
         <source>exit</source>
         <translation type="unfinished">退出</translation>
     </message>
@@ -160,9 +159,9 @@
         <translation type="unfinished">邪恶效果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="244"/>
+        <location filename="../mainwindow.cpp" line="256"/>
         <source>English</source>
-        <translation type="unfinished">中文</translation>
+        <translation type="unfinished">简体中文</translation>
     </message>
     <message>
         <source>中文</source>
@@ -173,88 +172,95 @@
         <translation type="obsolete">中文</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="42"/>
-        <location filename="../mainwindow.cpp" line="273"/>
+        <location filename="../mainwindow.cpp" line="40"/>
+        <location filename="../mainwindow.cpp" line="285"/>
         <source>&amp;Undo</source>
         <translation type="unfinished">撤销(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="44"/>
-        <location filename="../mainwindow.cpp" line="45"/>
-        <location filename="../mainwindow.cpp" line="274"/>
-        <location filename="../mainwindow.cpp" line="275"/>
+        <location filename="../mainwindow.cpp" line="42"/>
+        <location filename="../mainwindow.cpp" line="43"/>
+        <location filename="../mainwindow.cpp" line="286"/>
+        <location filename="../mainwindow.cpp" line="287"/>
         <source>undo</source>
         <translation type="unfinished">撤销</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="46"/>
+        <location filename="../mainwindow.cpp" line="44"/>
         <source>:/menu_icon/undo-icon</source>
         <translation type="unfinished">:/menu_icon/undo-icon</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="48"/>
-        <location filename="../mainwindow.cpp" line="276"/>
+        <location filename="../mainwindow.cpp" line="46"/>
+        <location filename="../mainwindow.cpp" line="288"/>
         <source>&amp;Redo</source>
         <translation type="unfinished">恢复(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="50"/>
-        <location filename="../mainwindow.cpp" line="51"/>
-        <location filename="../mainwindow.cpp" line="277"/>
-        <location filename="../mainwindow.cpp" line="278"/>
+        <location filename="../mainwindow.cpp" line="48"/>
+        <location filename="../mainwindow.cpp" line="49"/>
+        <location filename="../mainwindow.cpp" line="289"/>
+        <location filename="../mainwindow.cpp" line="290"/>
         <source>redo</source>
         <translation type="unfinished">恢复</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="52"/>
+        <location filename="../mainwindow.cpp" line="50"/>
         <source>:/menu_icon/redo-icon</source>
         <translation type="unfinished">:/menu_icon/redo-icon</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="70"/>
+        <location filename="../mainwindow.cpp" line="68"/>
         <source>Open Image</source>
         <translation type="unfinished">打开图片</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="71"/>
-        <location filename="../mainwindow.cpp" line="202"/>
+        <location filename="../mainwindow.cpp" line="69"/>
+        <location filename="../mainwindow.cpp" line="200"/>
         <source>Image Files (*.png *.jpg *.jpeg *.bmp)</source>
         <translation type="unfinished">Image Files (*.png *.jpg *.jpeg *.bmp)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="125"/>
+        <location filename="../mainwindow.cpp" line="123"/>
         <source>About this application</source>
         <translation type="unfinished">关于此软件</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="125"/>
+        <location filename="../mainwindow.cpp" line="123"/>
         <source>Copyright(c)2017 Chaoyang Liu.
 This software is under GPLv3.0 license.</source>
         <translation type="unfinished">版权所有(c)2017 刘朝洋
 此软件使用GPLv3.0协议许可</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="200"/>
+        <location filename="../mainwindow.cpp" line="198"/>
         <source>Save File</source>
         <translation type="unfinished">保存文件</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="212"/>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="212"/>
+        <source>Save the changes?</source>
+        <translation type="unfinished">保存修改吗？</translation>
+    </message>
+    <message>
         <source>Do you really want to exit?</source>
-        <translation type="unfinished">你真的想退出吗？</translation>
+        <translation type="obsolete">你真的想退出吗？</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="212"/>
         <source>Yes</source>
-        <translation type="unfinished">是</translation>
+        <translation type="obsolete">是</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="212"/>
         <source>No</source>
-        <translation type="unfinished">否</translation>
+        <translation type="obsolete">否</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="245"/>
+        <location filename="../mainwindow.cpp" line="257"/>
         <source>&amp;%1 %2</source>
         <translation type="unfinished">&amp;%1 %2</translation>
     </message>

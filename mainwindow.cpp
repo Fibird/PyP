@@ -207,24 +207,7 @@ void MainWindow::on_actionSave_as_triggered()
 
 void MainWindow::on_action_Exit_triggered()
 {
-    if (!undoStack->isClean())
-    {
-        switch (QMessageBox::question(this, tr("Save"), tr("Save the changes?"),
-                                      QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
-                                      QMessageBox::Yes))
-        {
-            case QMessageBox::Yes:
-                on_action_Save_triggered();
-                this->close();
-                break;
-            case QMessageBox::No:
-                this->close();
-            default:
-                break;
-        }
-    }
-    else
-        this->close();
+    this->close();
 }
 
 void MainWindow::createLanguageMenu()
@@ -292,5 +275,22 @@ void MainWindow::retranslateUi()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    on_action_Exit_triggered();
+    if (!undoStack->isClean())
+    {
+        QMessageBox::StandardButton btn = QMessageBox::question(this, tr("Save"), tr("Save the changes?"),
+                                              QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        if (btn == QMessageBox::Yes)
+        {
+            on_action_Save_triggered();
+            event->accept();
+        }
+        else if (btn == QMessageBox::No)
+        {
+            event->accept();
+        }
+        else
+            event->ignore();
+    }
+    else
+        event->accept();
 }
