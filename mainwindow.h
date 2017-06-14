@@ -26,6 +26,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void wheelEvent(QWheelEvent *event);
+    void closeEvent(QCloseEvent *event);
 private slots:
     void on_action_Open_triggered();
 
