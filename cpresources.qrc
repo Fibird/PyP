@@ -16,5 +16,4 @@
     <qresource prefix="/app_icon">
         <file alias="app-logo">logo/pyp_logo.png</file>
     </qresource>
-    <qresource prefix="/langs"/>
 </RCC>

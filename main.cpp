@@ -3,7 +3,7 @@
  * E-main: chaoyanglius@outlook.com
  *
  * Software License Agreement (GPL License)
- * A example using RMI & JDBC to operate remote database: Server Side
+ * A tiny photo editor for painting your photos.
  * Copyright (c) 2017, Chaoyang Liu
  *
  * This program is free software: you can redistribute it and/or modify
