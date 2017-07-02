@@ -10,20 +10,26 @@ PyP /paip/ is a tiny photo editor. The name "PyP" is a acronym for "Paint your P
 
 ## Pencil drawing effect
 
+![sketch](http://oqny23dsv.bkt.clouddn.com/sketch-demo.png)
+
 You can get a pencil draw from your photo easily and fast, only one click. And you can also select different styles according to your preference.
 
 ## Cartoon effect
+
+![cartoon](http://oqny23dsv.bkt.clouddn.com/cartoon-demo.png)
 
 Make your own cartoon characters using your personal photos. 
 
 ## Villain effect
 
+![villain](http://oqny23dsv.bkt.clouddn.com/evil-demo.png)
+
 Create a villain character using your photos.
 
-## Coloring photos manually
+## Avatars making
 
 Developing...
 
-## Avatars making
+## Coloring photos manually
 
 Developing...
