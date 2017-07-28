@@ -28,15 +28,18 @@ SOURCES += main.cpp\
     commands/commands.cpp \
     cartoonifier/sketchize.cpp \
     cartoonifier/paintize.cpp \
-    cartoonifier/evilize.cpp
+    cartoonifier/evilize.cpp \
+    about/aboutdlg.cpp
 
 HEADERS  += mainwindow.h \
     cartoonifier/sketchize.h \
     commands/commands.h \
     cartoonifier/paintize.h \
-    cartoonifier/evilize.h
+    cartoonifier/evilize.h \
+    about/aboutdlg.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    about/aboutdlg.ui
 
 RESOURCES += \
     cpresources.qrc

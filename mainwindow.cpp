@@ -12,6 +12,7 @@
 #include <QStringList>
 #include <QString>
 #include <QLocale>
+#include "about/aboutdlg.h"
 #include "commands/commands.h"
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -120,7 +121,9 @@ void MainWindow::on_action_Save_triggered()
 
 void MainWindow::on_action_About_triggered()
 {
-    QMessageBox::about(this, tr("About this application"), tr("Copyright(c)2017 Chaoyang Liu.\nThis software is under GPLv3.0 license."));
+    //QMessageBox::about(this, tr("About this application"), tr("Copyright(c)2017 Chaoyang Liu.\nThis software is under GPLv3.0 license."));
+    AboutDlg adlg;
+    adlg.exec();
 }
 
 void MainWindow::on_action_Painting_triggered()
