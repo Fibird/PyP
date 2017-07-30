@@ -2,6 +2,40 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh" sourcelanguage="en">
 <context>
+    <name>AboutDlg</name>
+    <message>
+        <location filename="../about/aboutdlg.ui" line="14"/>
+        <source>About</source>
+        <translation type="unfinished">关于</translation>
+    </message>
+    <message>
+        <location filename="../about/aboutdlg.ui" line="49"/>
+        <source>PyP v0.1  (32bit) </source>
+        <translation type="unfinished">画照 v0.1  (32位)</translation>
+    </message>
+    <message>
+        <location filename="../about/aboutdlg.ui" line="75"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Author:&lt;a href=&quot;https://github.com/Sunlcy/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Fibird&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;作者:&lt;a href=&quot;https://github.com/Sunlcy/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;奋斗的小鸟&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../about/aboutdlg.ui" line="91"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Home Page:&lt;a href=&quot;http://fibird.me/PyP/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;fibird.me/PyP/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;主页:&lt;a href=&quot;http://fibird.me/PyP/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;fibird.me/PyP/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../about/aboutdlg.cpp" line="9"/>
+        <source>            GNU GENERAL PUBLIC LICENSE
+                                                                  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+                                                                  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+                                                                 You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.</source>
+        <translation type="unfinished">           GNU GENERAL PUBLIC LICENSE
+                                                                  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+                                                                  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+                                                                 You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="14"/>
@@ -159,7 +193,7 @@
         <translation type="unfinished">邪恶效果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="256"/>
+        <location filename="../mainwindow.cpp" line="242"/>
         <source>English</source>
         <translation type="unfinished">简体中文</translation>
     </message>
@@ -172,78 +206,76 @@
         <translation type="obsolete">中文</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="40"/>
-        <location filename="../mainwindow.cpp" line="285"/>
+        <location filename="../mainwindow.cpp" line="41"/>
+        <location filename="../mainwindow.cpp" line="271"/>
         <source>&amp;Undo</source>
         <translation type="unfinished">撤销(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="42"/>
         <location filename="../mainwindow.cpp" line="43"/>
-        <location filename="../mainwindow.cpp" line="286"/>
-        <location filename="../mainwindow.cpp" line="287"/>
+        <location filename="../mainwindow.cpp" line="44"/>
+        <location filename="../mainwindow.cpp" line="272"/>
+        <location filename="../mainwindow.cpp" line="273"/>
         <source>undo</source>
         <translation type="unfinished">撤销</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="44"/>
+        <location filename="../mainwindow.cpp" line="45"/>
         <source>:/menu_icon/undo-icon</source>
         <translation type="unfinished">:/menu_icon/undo-icon</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="46"/>
-        <location filename="../mainwindow.cpp" line="288"/>
+        <location filename="../mainwindow.cpp" line="47"/>
+        <location filename="../mainwindow.cpp" line="274"/>
         <source>&amp;Redo</source>
         <translation type="unfinished">恢复(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="48"/>
         <location filename="../mainwindow.cpp" line="49"/>
-        <location filename="../mainwindow.cpp" line="289"/>
-        <location filename="../mainwindow.cpp" line="290"/>
+        <location filename="../mainwindow.cpp" line="50"/>
+        <location filename="../mainwindow.cpp" line="275"/>
+        <location filename="../mainwindow.cpp" line="276"/>
         <source>redo</source>
         <translation type="unfinished">恢复</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="50"/>
+        <location filename="../mainwindow.cpp" line="51"/>
         <source>:/menu_icon/redo-icon</source>
         <translation type="unfinished">:/menu_icon/redo-icon</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="68"/>
+        <location filename="../mainwindow.cpp" line="69"/>
         <source>Open Image</source>
         <translation type="unfinished">打开图片</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="69"/>
-        <location filename="../mainwindow.cpp" line="200"/>
+        <location filename="../mainwindow.cpp" line="70"/>
+        <location filename="../mainwindow.cpp" line="203"/>
         <source>Image Files (*.png *.jpg *.jpeg *.bmp)</source>
         <translation type="unfinished">Image Files (*.png *.jpg *.jpeg *.bmp)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="123"/>
         <source>About this application</source>
-        <translation type="unfinished">关于此软件</translation>
+        <translation type="obsolete">关于此软件</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="123"/>
         <source>Copyright(c)2017 Chaoyang Liu.
 This software is under GPLv3.0 license.</source>
-        <translation type="unfinished">版权所有(c)2017 刘朝洋
+        <translation type="obsolete">版权所有(c)2017 刘朝洋
 此软件使用GPLv3.0协议许可</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="198"/>
+        <location filename="../mainwindow.cpp" line="201"/>
         <source>Save File</source>
         <translation type="unfinished">保存文件</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="212"/>
+        <location filename="../mainwindow.cpp" line="283"/>
         <source>Save</source>
         <translation type="unfinished">保存</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="212"/>
+        <location filename="../mainwindow.cpp" line="283"/>
         <source>Save the changes?</source>
         <translation type="unfinished">保存修改吗？</translation>
     </message>
@@ -260,7 +292,7 @@ This software is under GPLv3.0 license.</source>
         <translation type="obsolete">否</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="257"/>
+        <location filename="../mainwindow.cpp" line="243"/>
         <source>&amp;%1 %2</source>
         <translation type="unfinished">&amp;%1 %2</translation>
     </message>
