@@ -84,20 +84,20 @@ OPENCV2 {
         # change this variable according to your path of opencv
         OPENCV_PATH = D:/opencv # Note: update with the correct OpenCV version
         # change this variable according to your version of opencv
-        LIBS_PATH = "$$OPENCV_PATH/build/x86/vc12/lib" #project compiled using Visual C++ 2013 32bit compiler
+        LIBS_PATH = "$$OPENCV_PATH/build/x64/vc12/lib"
 
         CONFIG(debug, debug|release) {
             LIBS     += -L$$LIBS_PATH \
-                        -lopencv_core248d \
-                        -lopencv_imgproc248d \
-                        -lopencv_highgui248d
+                        -lopencv_core249d \
+                        -lopencv_imgproc249d \
+                        -lopencv_highgui249d
            }
 
         CONFIG(release, debug|release) {
             LIBS     += -L$$LIBS_PATH \
-                        -lopencv_core248 \
-                        -lopencv_imgproc248 \
-                        -lopencv_highgui248
+                        -lopencv_core249 \
+                        -lopencv_imgproc249 \
+                        -lopencv_highgui249
            }
     }
 }
