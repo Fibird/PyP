@@ -51,7 +51,7 @@ DISTFILES += \
     languages/pyp_en.ts \
     languages/pyp_zh.ts
 
-# You need to set a environment called OPENCV_VERSION
+# You need to set an environment variable called OPENCV_VERSION
 # whose value is OPENCV3 or OPENCV2 according to your opencv version
 CONFIG += $$(OPENCV_VERSION)
 
