@@ -40,9 +40,13 @@ Developing...
 
 # Known bugs
 
-emmmmm
+- [ ] [undo-redo problem](https://github.com/Fibird/PyP/issues/29)
+- [ ] [software migration problem](https://github.com/Fibird/PyP/issues/12)
+
 
 # Contributing
+
+## Environment
 
 If you want to make Contribution on this project, you need to do this:
 
@@ -115,6 +119,10 @@ OPENCV2 {
 ```
 
 If you using OpenCV2, just modify the OPENCV2 part according to your environment including the **path** of opencv and **name** of OpenCV dynamic link library like opencv_core249. For example, if you use OpenCV 2.4.12, you need to replace the suffix 249 in the name of all libs like -lopencv_core249d with 2412.
+
+## Language
+
+You need to generate language files using Qt Linguist before running it and put them into folder named *languages* which is in the same path of executable program.
 
 # License
 

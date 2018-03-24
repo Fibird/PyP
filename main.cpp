@@ -1,8 +1,7 @@
 /**
  * Author: Chaoyang Liu
- * E-main: chaoyanglius@outlook.com
+ * E-mail: chaoyanglius@outlook.com
  *
- * Software License Agreement (GPL License)
  * A tiny photo editor for painting your photos.
  * Copyright (c) 2017, Chaoyang Liu
  *
