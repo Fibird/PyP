@@ -82,22 +82,22 @@ OPENCV2 {
         message("Using win32 configuration")
 
         # change this variable according to your path of opencv
-        OPENCV_PATH = D:/opencv # Note: update with the correct OpenCV version
+        OPENCV_PATH = C:/opencv # Note: update with the correct OpenCV version
         # change this variable according to your version of opencv
-        LIBS_PATH = "$$OPENCV_PATH/build/x64/vc12/lib"
+        LIBS_PATH = "$$OPENCV_PATH/build/x64/vc14/lib"
 
         CONFIG(debug, debug|release) {
             LIBS     += -L$$LIBS_PATH \
-                        -lopencv_core249d \
-                        -lopencv_imgproc249d \
-                        -lopencv_highgui249d
+                        -lopencv_core2413d \
+                        -lopencv_imgproc2413d \
+                        -lopencv_highgui2413d
            }
 
         CONFIG(release, debug|release) {
             LIBS     += -L$$LIBS_PATH \
-                        -lopencv_core249 \
-                        -lopencv_imgproc249 \
-                        -lopencv_highgui249
+                        -lopencv_core2413 \
+                        -lopencv_imgproc2413 \
+                        -lopencv_highgui2413
            }
     }
 }
